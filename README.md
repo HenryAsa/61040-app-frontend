@@ -2,6 +2,8 @@
 
 ## Getting Started
 
+Run `npm run dev:server` to start the server. Run `npm run dev:client` to start the client
+
 If you are using [VSCode](https://code.visualstudio.com/)/VSCodium, install the ESLint and Prettier extensions.
 The project is already configured to use ESLint and Prettier,
 but feel free to add your own rules if you want.
