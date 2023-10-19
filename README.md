@@ -1,6 +1,8 @@
 # 6.1040 Social Media Frontend Starter Code
 
-# [Vercel Deployment](https://61040-app-frontend.vercel.app/)
+# [Vercel Frontend Deployment](https://61040-app-frontend.vercel.app/)
+
+# [Vercel Backend Deployment](https://61040-app-backend.vercel.app/)
 
 ## Getting Started
 
