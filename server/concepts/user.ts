@@ -5,6 +5,10 @@ import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 export interface UserDoc extends BaseDoc {
   username: string;
   password: string;
+  // address?: LocationDoc;
+  posts: Array<ObjectId>;
+  joinedActivities: Array<ObjectId>;
+  joinedCarpools: Array<ObjectId>;
 }
 
 export default class UserConcept {
@@ -31,7 +35,7 @@ export default class UserConcept {
   }
 
   async getUserByUsername(username: string) {
-    const user = await this.users.readOne({ username });
+    const user = await this.users.readOne({ username: username });
     if (user === null) {
       throw new NotFoundError(`User not found!`);
     }
@@ -54,7 +58,7 @@ export default class UserConcept {
   }
 
   async authenticate(username: string, password: string) {
-    const user = await this.users.readOne({ username, password });
+    const user = await this.users.readOne({ username: username, password: password });
     if (!user) {
       throw new NotAllowedError("Username or password is incorrect.");
     }
@@ -80,6 +84,10 @@ export default class UserConcept {
       throw new NotFoundError(`User not found!`);
     }
   }
+
+  // async addLocationToUser(_id: ObjectId, location_id: ObjectId) {
+
+  // }
 
   private async canCreate(username: string, password: string) {
     if (!username || !password) {

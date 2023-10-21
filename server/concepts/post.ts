@@ -5,6 +5,7 @@ import { NotAllowedError, NotFoundError } from "./errors";
 
 export interface PostOptions {
   backgroundColor?: string;
+  // comments?: Array<ObjectId>;  // I can just query database by parent post id?
 }
 
 export interface PostDoc extends BaseDoc {
@@ -28,7 +29,16 @@ export default class PostConcept {
     return posts;
   }
 
-  async getByAuthor(author: ObjectId) {
+  async getPostById(_id: ObjectId) {
+    const post = await this.posts.readOne({ _id });
+    if (post === null) {
+      throw new NotFoundError(`Post with the id '${_id}' was not found!`);
+    }
+    return post;
+    // return this.sanitizePost(post);
+  }
+
+  async getPostsByAuthor(author: ObjectId) {
     return await this.getPosts({ author });
   }
 
