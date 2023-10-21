@@ -53,13 +53,13 @@ export default class ActivityConcept {
     return this.sanitizeActivities(activities);
   }
 
-  // async getActivitiesByMemberId(user: ObjectId) {
-  //   const activities = await this.activities.readMany({ members: { $elemMatch: { user } } });
-  //   if (activities.length === 0) {
-  //     throw new NotFoundError(`This user is not a member of any activities`);
-  //   }
-  //   return this.sanitizeActivities(activities);
-  // }
+  async getActivitiesByMemberId(user: ObjectId) {
+    const activities = await this.activities.readMany({ members: { $elemMatch: { user } } });
+    if (activities.length === 0) {
+      throw new NotFoundError(`This user is not a member of any activities`);
+    }
+    return this.sanitizeActivities(activities);
+  }
 
   async getActivityByName(name: string) {
     const activity = await this.activities.readOne({ name: name });
