@@ -27,9 +27,9 @@ import { defineEmits, ref as vueRef } from "vue";
 import { v4 } from "uuid";
 
 const imageUpload = vueRef();
-const imageSrc = vueRef();
+const imageUrl = vueRef();
 
-const emit = defineEmits(["update:imageSrc"]);
+const emit = defineEmits(["update:imageUrl"]);
 
 initializeApp(firebaseConfig);
 
@@ -51,9 +51,8 @@ const uploadImage = async () => {
   await uploadBytes(imageRef, imageUpload.value).then(async (response) => {
     console.log(response);
     await getDownloadURL(ref(storage, response.ref.fullPath)).then((url) => {
-      console.log("this is url");
-      imageSrc.value = url;
-      emit("update:imageSrc", url);
+      imageURL.value = url;
+      emit("update:imageURL", url);
     });
   });
 };
@@ -61,7 +60,7 @@ const uploadImage = async () => {
 
 <template>
   <div>
-    <img v-if="imageSrc" :src="imageSrc" alt="Your Image" />
+    <img v-if="imageUrl" :src="imageUrl" alt="Your Image" />
     <br />
     <input type="file" @change="handleFileChange" />
     <button class="pure-button pure-button-primary" @click="uploadImage">Upload ID</button>
