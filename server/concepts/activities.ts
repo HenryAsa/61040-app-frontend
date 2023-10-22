@@ -54,7 +54,7 @@ export default class ActivityConcept {
   }
 
   async getActivitiesByMemberId(user: ObjectId) {
-    const activities = await this.activities.readMany({ members: { $elemMatch: { user } } });
+    const activities = await this.activities.readMany({ members: { $elemMatch: { $eq: user } } });
     if (activities.length === 0) {
       throw new NotFoundError(`This user is not a member of any activities`);
     }
