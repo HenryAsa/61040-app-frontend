@@ -5,18 +5,17 @@ import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 export interface UserDoc extends BaseDoc {
   username: string;
   password: string;
-  // address?: LocationDoc;
-  posts: Array<ObjectId>;
-  joinedActivities: Array<ObjectId>;
-  joinedCarpools: Array<ObjectId>;
+  first_name: string;
+  last_name: string;
+  profile_photo: string;
 }
 
 export default class UserConcept {
   public readonly users = new DocCollection<UserDoc>("users");
 
-  async create(username: string, password: string) {
+  async create(username: string, password: string, first_name: string, last_name: string, profile_photo: string) {
     await this.canCreate(username, password);
-    const _id = await this.users.createOne({ username, password });
+    const _id = await this.users.createOne({ username: username, password: password, first_name: first_name, last_name: last_name, profile_photo: profile_photo });
     return { msg: "User created successfully!", user: await this.users.readOne({ _id }) };
   }
 
@@ -84,10 +83,6 @@ export default class UserConcept {
       throw new NotFoundError(`User not found!`);
     }
   }
-
-  // async addLocationToUser(_id: ObjectId, location_id: ObjectId) {
-
-  // }
 
   private async canCreate(username: string, password: string) {
     if (!username || !password) {

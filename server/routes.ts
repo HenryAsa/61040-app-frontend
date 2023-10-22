@@ -32,9 +32,9 @@ class Routes {
   }
 
   @Router.post("/users")
-  async createUser(session: WebSessionDoc, username: string, password: string) {
+  async createUser(session: WebSessionDoc, username: string, password: string, first_name: string, last_name: string, profile_photo: string) {
     WebSession.isLoggedOut(session);
-    return await User.create(username, password);
+    return await User.create(username, password, first_name, last_name, profile_photo);
   }
 
   @Router.patch("/users")
