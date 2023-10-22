@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CreateActivityForm from "@/components/Activity/CreateActivityForm.vue";
 // import EditActivityForm from "@/components/Activity/EditActivityForm.vue";
-// import ActivityComponent from "@/components/Activity/ActivityComponent.vue";
+import ActivityComponent from "@/components/Activity/ActivityComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
@@ -19,7 +19,7 @@ async function getActivities(author?: string) {
   let query: Record<string, string> = author !== undefined ? { author } : {};
   let activityResults;
   try {
-    activityResults = await fetchy("api/activities", "GET", { query });
+    activityResults = await fetchy("api/activities", "GET");
   } catch (_) {
     return;
   }
@@ -39,7 +39,7 @@ onBeforeMount(async () => {
 
 <template>
   <section v-if="isLoggedIn">
-    <h2>Create a activity:</h2>
+    <h2>Create an activity:</h2>
     <CreateActivityForm @refreshActivities="getActivities" />
   </section>
   <div class="row">
