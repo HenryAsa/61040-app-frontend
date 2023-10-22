@@ -12,14 +12,19 @@ const profile_picture = ref("");
 const { createUser, loginUser, updateSession } = useUserStore();
 
 async function register() {
+  if (profile_picture.value === "") {
+    return;
+  }
+  console.log(`THIS IS THE PROFILE URL:   ${profile_picture.value}`);
   await createUser(username.value, password.value, first_name.value, last_name.value, profile_picture.value);
   await loginUser(username.value, password.value);
   void updateSession();
   void router.push({ name: "Home" });
 }
 
-function uploadImage(url: string) {
+async function assignURL(url: string) {
   profile_picture.value = url;
+  console.log(`JUST SET THE URL           ${url}`);
 }
 </script>
 
@@ -44,7 +49,7 @@ function uploadImage(url: string) {
         <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
       </div>
       <div class="pure-control-group">
-        <ImageUploader @update:imageSrc="uploadImage"></ImageUploader>
+        <ImageUploader @update:imageURL="assignURL"></ImageUploader>
       </div>
       <div class="pure-controls">
         <button type="submit" class="pure-button pure-button-primary">Register</button>

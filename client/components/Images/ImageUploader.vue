@@ -2,7 +2,9 @@
 // Import the functions you need from the SDKs you need
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getDownloadURL, uploadBytes, ref as firebaseRef } from "firebase/storage";
+import { defineEmits, ref } from "vue";
+import { storage } from "../../../server/firebase";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,18 +24,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-import { getDownloadURL, ref as firebaseRef, uploadBytes } from "firebase/storage";
-import { v4 } from "uuid";
-import { defineEmits, ref } from "vue";
-
 const imageUpload = ref();
 const imageURL = ref();
 
 const emit = defineEmits(["update:imageURL"]);
-
-initializeApp(firebaseConfig);
-
-const storage = getStorage();
 
 function handleFileChange(event: Event) {
   if (event.target) {
@@ -46,11 +40,12 @@ function handleFileChange(event: Event) {
 
 const uploadImage = async () => {
   const file = imageUpload.value as File;
-  const imageRef = firebaseRef(storage, `images/${file.name + v4()}`);
+  const imageRef = firebaseRef(storage, `images/${file.name}`);
 
   await uploadBytes(imageRef, imageUpload.value).then(async (response) => {
     console.log(response);
-    await getDownloadURL(firebaseRef(storage, response.ref.fullPath)).then((url) => {
+    await getDownloadURL(firebaseRef(storage, response.ref.fullPath)).then(async (url) => {
+      console.log(`GOT THE URL ${url}`);
       imageURL.value = url;
       emit("update:imageURL", url);
     });
@@ -60,10 +55,10 @@ const uploadImage = async () => {
 
 <template>
   <div>
-    <img v-if="imageURL" :src="imageURL" alt="Upload an Image" />
+    <img v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
     <br />
     <input type="file" @change="handleFileChange" />
-    <button class="pure-button pure-button-primary" @click="uploadImage">Upload Image</button>
+    <button @click="uploadImage">Upload Image</button>
     <br />
   </div>
 </template>
