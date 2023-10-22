@@ -22,14 +22,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { defineEmits, ref as vueRef } from "vue";
+import { getDownloadURL, ref as firebaseRef, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
+import { defineEmits, ref } from "vue";
 
-const imageUpload = vueRef();
-const imageUrl = vueRef();
+const imageUpload = ref();
+const imageURL = ref();
 
-const emit = defineEmits(["update:imageUrl"]);
+const emit = defineEmits(["update:imageURL"]);
 
 initializeApp(firebaseConfig);
 
@@ -46,11 +46,11 @@ function handleFileChange(event: Event) {
 
 const uploadImage = async () => {
   const file = imageUpload.value as File;
-  const imageRef = ref(storage, `images/${file.name + v4()}`);
+  const imageRef = firebaseRef(storage, `images/${file.name + v4()}`);
 
   await uploadBytes(imageRef, imageUpload.value).then(async (response) => {
     console.log(response);
-    await getDownloadURL(ref(storage, response.ref.fullPath)).then((url) => {
+    await getDownloadURL(firebaseRef(storage, response.ref.fullPath)).then((url) => {
       imageURL.value = url;
       emit("update:imageURL", url);
     });
@@ -60,10 +60,10 @@ const uploadImage = async () => {
 
 <template>
   <div>
-    <img v-if="imageUrl" :src="imageUrl" alt="Your Image" />
+    <img v-if="imageURL" :src="imageURL" alt="Upload an Image" />
     <br />
     <input type="file" @change="handleFileChange" />
-    <button class="pure-button pure-button-primary" @click="uploadImage">Upload ID</button>
+    <button class="pure-button pure-button-primary" @click="uploadImage">Upload Image</button>
     <br />
   </div>
 </template>
