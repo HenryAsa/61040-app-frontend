@@ -14,7 +14,7 @@ export default class UserConcept {
   public readonly users = new DocCollection<UserDoc>("users");
 
   async create(username: string, password: string, first_name: string, last_name: string, profile_photo: string) {
-    await this.canCreate(username, password);
+    await this.canCreate(username, password, first_name, last_name);
     const _id = await this.users.createOne({ username: username, password: password, first_name: first_name, last_name: last_name, profile_photo: profile_photo });
     return { msg: "User created successfully!", user: await this.users.readOne({ _id }) };
   }
@@ -84,9 +84,9 @@ export default class UserConcept {
     }
   }
 
-  private async canCreate(username: string, password: string) {
-    if (!username || !password) {
-      throw new BadValuesError("Username and password must be non-empty!");
+  private async canCreate(username: string, password: string, first_name: string, last_name: string) {
+    if (!username || !password || !first_name || last_name) {
+      throw new BadValuesError("Username, password, first name, and last name must be non-empty!");
     }
     await this.isUsernameUnique(username);
   }
