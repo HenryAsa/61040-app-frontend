@@ -2,7 +2,7 @@
 // Import the functions you need from the SDKs you need
 import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from "firebase/app";
-import { getDownloadURL, uploadBytes, ref as firebaseRef } from "firebase/storage";
+import { ref as firebaseRef, getDownloadURL, uploadBytes } from "firebase/storage";
 import { defineEmits, ref } from "vue";
 import { storage } from "../../../server/firebase";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -55,7 +55,8 @@ const uploadImage = async () => {
 
 <template>
   <div>
-    <img v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
+    <v-flex></v-flex>
+    <img class="center" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
     <br />
     <input type="file" @change="handleFileChange" />
     <button @click="uploadImage">Upload Image</button>
