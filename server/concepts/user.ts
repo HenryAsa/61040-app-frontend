@@ -84,9 +84,35 @@ export default class UserConcept {
     }
   }
 
+  private async isValidPassword(password: string) {
+    const isUpperCase = new RegExp(/(?=.*[A-Z])/g);
+    const isSpecialChar = new RegExp(/(?=.*[!@#$%^&*])/g);
+    const isLowerCase = new RegExp(/(?=.*[a-z])/g);
+    const isLong = new RegExp(/(?=.{7,})/g);
+    const isNumeric = new RegExp(/ (?=.*[0-9])/g);
+    const checkIsWhiteSpacefromBegAndEnd = new RegExp(/^[^ ][\w\W ]*[^ ]/g);
+
+    if (
+      password.match(isUpperCase) &&
+      password.match(isSpecialChar) &&
+      password.match(isLowerCase) &&
+      password.match(isLong) &&
+      password.match(isNumeric) &&
+      password.match(checkIsWhiteSpacefromBegAndEnd)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   private async canCreate(username: string, password: string, first_name: string, last_name: string) {
     if (!username || !password || !first_name || last_name) {
       throw new BadValuesError("Username, password, first name, and last name must be non-empty!");
+    }
+    if (!this.isValidPassword(password)) {
+      throw new BadValuesError(
+        "Make the sure the password is at least 7 characters long, contains a combination of upper and lowercase letters, conatins a number, contains a special character, and does not contain any whitespace",
+      );
     }
     await this.isUsernameUnique(username);
   }
