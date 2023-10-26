@@ -91,7 +91,8 @@ const updatePassword = () => {
     <div class="show-box">
       <button @click="showPassword">{{ state.passwordType === "password" ? "Show Password" : "Hide Password" }}</button>
     </div>
-    <label for="strength"> Password Strength<span v-if="!isInitial">: </span>
+    <label for="strength">
+      Password Strength<span v-if="!isInitial">: </span>
       <span v-bind:class="{ initial: isInitial, short: isShort, weak: isWeak, fair: isFair, excellent: isExcellent }">{{ passwordStrength }}</span>
     </label>
     <div class="rg-bar">
