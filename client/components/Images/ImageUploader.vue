@@ -58,13 +58,13 @@ const uploadImage = async () => {
   <div>
     <v-flex></v-flex>
     <input type="file" @change="handleFileChange" />
-    <img class="center" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
+    <img class="profile_photo" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
     <br />
   </div>
 </template>
 
 <style>
-img {
+.profile_photo {
   width: 20vw;
   height: 20vw;
   object-fit: cover;
