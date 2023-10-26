@@ -2,8 +2,8 @@
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
-import PasswordValidation from "./PasswordValidation.vue";
 import ImageUploader from "../Images/ImageUploader.vue";
+import PasswordValidation from "./PasswordValidation.vue";
 
 const first_name = ref("");
 const last_name = ref("");
@@ -16,6 +16,7 @@ async function register() {
   if (profile_picture.value === "") {
     return;
   }
+  console.log(username.value, password.value, first_name.value, last_name.value, profile_picture.value);
   console.log(`THIS IS THE PROFILE URL:   ${profile_picture.value}`);
   await createUser(username.value, password.value, first_name.value, last_name.value, profile_picture.value);
   await loginUser(username.value, password.value);
@@ -26,6 +27,11 @@ async function register() {
 async function assignURL(url: string) {
   profile_picture.value = url;
   console.log(`JUST SET THE URL           ${url}`);
+}
+
+function assignPassword(userPassword: string) {
+  password.value = userPassword;
+  console.log(password.value);
 }
 </script>
 
@@ -46,9 +52,7 @@ async function assignURL(url: string) {
         <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
       </div>
       <div class="pure-control-group">
-        <label for="aligned-password">Password</label>
-        <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
-        <PasswordValidation></PasswordValidation>
+        <PasswordValidation @userPassword="assignPassword" id="aligned-password" placeholder="Password" required></PasswordValidation>
       </div>
       <div class="pure-control-group">
         <ImageUploader @update:imageURL="assignURL"></ImageUploader>

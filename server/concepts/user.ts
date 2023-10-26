@@ -99,7 +99,7 @@ export default class UserConcept {
   }
 
   private async canCreate(username: string, password: string, first_name: string, last_name: string) {
-    if (!username || !password || !first_name || last_name) {
+    if (!username || !password || !first_name || !last_name) {
       throw new BadValuesError("Username, password, first name, and last name must be non-empty!");
     }
     if (!this.isValidPassword(password)) {

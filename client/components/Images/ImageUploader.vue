@@ -29,11 +29,12 @@ const imageURL = ref();
 
 const emit = defineEmits(["update:imageURL"]);
 
-function handleFileChange(event: Event) {
+async function handleFileChange(event: Event) {
   if (event.target) {
     const target = event.target as HTMLInputElement;
     if (target?.files?.length) {
       imageUpload.value = target.files[0];
+      await uploadImage();
     }
   }
 }
@@ -56,12 +57,22 @@ const uploadImage = async () => {
 <template>
   <div>
     <v-flex></v-flex>
-    <img class="center" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
-    <br />
     <input type="file" @change="handleFileChange" />
-    <button @click="uploadImage">Upload Image</button>
+    <img class="center" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
     <br />
   </div>
 </template>
 
-<style></style>
+<style>
+img {
+  width: 20vw;
+  height: 20vw;
+  object-fit: cover;
+  align-self: auto;
+  border: 3px solid #e3e8f4;
+  border-radius: 16px;
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+}
+</style>

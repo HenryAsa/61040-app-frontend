@@ -11,6 +11,8 @@ const state = reactive<PasswordValidator>({
   passwordType: "password",
 });
 
+const emit = defineEmits(["userPassword"]);
+
 const isInitial = computed(() => {
   return state.password.length < 3;
 });
@@ -76,12 +78,16 @@ const passwordStrength = computed(() => {
 function showPassword() {
   state.passwordType = state.passwordType === "password" ? "text" : "password";
 }
+
+const updatePassword = () => {
+  emit("userPassword", state.password);
+};
 </script>
 
 <template>
   <div class="password-setter box-shadow">
     <label for="new">Password</label>
-    <input :type="state.passwordType" v-model="state.password" name="new" />
+    <input :type="state.passwordType" v-model="state.password" name="new" placeholder="Password" @change="updatePassword" required />
     <div class="show-box">
       <button @click="showPassword">Show</button>
     </div>
