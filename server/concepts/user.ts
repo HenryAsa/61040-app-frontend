@@ -14,7 +14,7 @@ export default class UserConcept {
   public readonly users = new DocCollection<UserDoc>("users");
 
   async create(username: string, password: string, first_name: string, last_name: string, profile_photo: string) {
-    await this.canCreate(username, password, first_name, last_name);
+    await this.canCreate(username, password, first_name, last_name, profile_photo);
     const _id = await this.users.createOne({ username: username, password: password, first_name: first_name, last_name: last_name, profile_photo: profile_photo });
     return { msg: "User created successfully!", user: await this.users.readOne({ _id }) };
   }
@@ -92,15 +92,25 @@ export default class UserConcept {
     const isNumeric = new RegExp(/ (?=.*[0-9])/g);
     // const hasWhiteSpace = new RegExp(/\s/g);
 
-    if (password.match(isUpperCase) && password.match(isSpecialChar) && password.match(isLowerCase) && password.match(isLong) && password.match(isNumeric)) { // !password.match(hasWhiteSpace)) {
+    if (password.match(isUpperCase) && password.match(isSpecialChar) && password.match(isLowerCase) && password.match(isLong) && password.match(isNumeric)) {
+      // !password.match(hasWhiteSpace)) {
       return true;
     }
     return false;
   }
 
-  private async canCreate(username: string, password: string, first_name: string, last_name: string) {
-    if (!username || !password || !first_name || !last_name) {
-      throw new BadValuesError("Username, password, first name, and last name must be non-empty!");
+  private async canCreate(username: string, password: string, first_name: string, last_name: string, profile_photo: string) {
+    if (!username) {
+      throw new BadValuesError("The username cannot be empty");
+    }
+    if (!first_name) {
+      throw new BadValuesError("You must enter a first name");
+    }
+    if (!last_name) {
+      throw new BadValuesError("You must enter a last name");
+    }
+    if (!profile_photo) {
+      throw new BadValuesError("Please upload a profile photo");
     }
     if (!this.isValidPassword(password)) {
       throw new BadValuesError(
