@@ -2,6 +2,7 @@
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
+import PasswordValidation from "./PasswordValidation.vue";
 import ImageUploader from "../Images/ImageUploader.vue";
 
 const first_name = ref("");
@@ -47,6 +48,7 @@ async function assignURL(url: string) {
       <div class="pure-control-group">
         <label for="aligned-password">Password</label>
         <input type="password" v-model.trim="password" id="aligned-password" placeholder="Password" required />
+        <PasswordValidation></PasswordValidation>
       </div>
       <div class="pure-control-group">
         <ImageUploader @update:imageURL="assignURL"></ImageUploader>

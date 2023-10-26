@@ -86,20 +86,13 @@ export default class UserConcept {
 
   private async isValidPassword(password: string) {
     const isUpperCase = new RegExp(/(?=.*[A-Z])/g);
-    const isSpecialChar = new RegExp(/(?=.*[!@#$%^&*])/g);
     const isLowerCase = new RegExp(/(?=.*[a-z])/g);
+    const isSpecialChar = new RegExp(/(?=.*[!@#$%^&*])/g);
     const isLong = new RegExp(/(?=.{7,})/g);
     const isNumeric = new RegExp(/ (?=.*[0-9])/g);
-    const checkIsWhiteSpacefromBegAndEnd = new RegExp(/^[^ ][\w\W ]*[^ ]/g);
+    // const hasWhiteSpace = new RegExp(/\s/g);
 
-    if (
-      password.match(isUpperCase) &&
-      password.match(isSpecialChar) &&
-      password.match(isLowerCase) &&
-      password.match(isLong) &&
-      password.match(isNumeric) &&
-      password.match(checkIsWhiteSpacefromBegAndEnd)
-    ) {
+    if (password.match(isUpperCase) && password.match(isSpecialChar) && password.match(isLowerCase) && password.match(isLong) && password.match(isNumeric)) { // !password.match(hasWhiteSpace)) {
       return true;
     }
     return false;
