@@ -19,7 +19,7 @@ const deleteActivity = async () => {
 </script>
 
 <template>
-  <p class="author">{{ props.activity.creator.toString() }}</p>
+  <p class="name">{{ props.activity.name.toString() }}</p>
   <p>{{ props.activity.content }}</p>
   <div class="base">
     <menu v-if="props.activity.author == currentUsername">
@@ -38,7 +38,7 @@ p {
   margin: 0em;
 }
 
-.author {
+.name {
   font-weight: bold;
   font-size: 1.2em;
 }
