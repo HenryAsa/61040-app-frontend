@@ -2,12 +2,12 @@ import { ObjectId } from "mongodb";
 
 import { Router, getExpressRouter } from "./framework/router";
 
-import { Activity, Carpool, Comment, Friend, Location, Post, Upload, User, WebSession } from "./app";
+import { Activity, Carpool, Comment, Friend, Location, Post, Media, User, WebSession } from "./app";
 import { ActivityDoc, ActivityOptions } from "./concepts/activities";
 import { CarpoolDoc } from "./concepts/carpools";
 import { CommentDoc, CommentOptions } from "./concepts/comment";
 import { PostDoc, PostOptions } from "./concepts/post";
-import { UploadDoc } from "./concepts/upload";
+import { MediaDoc } from "./concepts/media";
 import { UserDoc } from "./concepts/user";
 import { WebSessionDoc } from "./concepts/websession";
 
@@ -188,57 +188,57 @@ class Routes {
     return Location.delete(_id);
   }
 
-  //// UPLOADS ////
+  //// MEDIA ////
 
-  @Router.get("/uploads")
-  async getUploads(creator?: string) {
-    let uploads;
+  @Router.get("/media")
+  async getMedia(creator?: string) {
+    let media;
     if (creator) {
       const id = (await User.getUserByUsername(creator))._id;
-      uploads = await Upload.getUploadsByCreator(id);
+      media = await Media.getMediaByCreator(id);
     } else {
-      uploads = await Upload.getUploads({});
+      media = await Media.getMedia({});
     }
-    return uploads;
+    return media;
   }
 
-  @Router.get("/uploads/:username")
-  async getUploadsByUsername(username: string) {
+  @Router.get("/media/:username")
+  async getMediaByUsername(username: string) {
     const user = await User.getUserByUsername(username);
-    const uploads = await Upload.getUploadsByCreator(user._id);
-    return { msg: `Successfully retrieved the uploads ${user.username} uploaded`, uploads: uploads };
+    const media = await Media.getMediaByCreator(user._id);
+    return { msg: `Successfully retrieved the media ${user.username} uploaded`, media: media };
   }
 
-  @Router.get("/uploads/byId/:id")
-  async getUploadById(id: ObjectId) {
-    const upload = await Upload.getUploadById(id);
-    return { msg: `Successfully retrieved the upload '${id}'`, upload: upload };
+  @Router.get("/media/byId/:id")
+  async getMediaById(id: ObjectId) {
+    const media = await Media.getMediaById(id);
+    return { msg: `Successfully retrieved the media '${id}'`, media: media };
   }
 
-  @Router.get("/uploads/byTarget/:target")
-  async getUploadsByTarget(target: ObjectId) {
-    return await Upload.getUploadsByTarget(target);
+  @Router.get("/media/byTarget/:target")
+  async getMediaByTarget(target: ObjectId) {
+    return await Media.getMediaByTarget(target);
   }
 
-  @Router.post("/uploads")
-  async createUpload(session: WebSessionDoc, upload_url: string, target?: ObjectId) {
+  @Router.post("/media")
+  async createMedia(session: WebSessionDoc, media_url: string, target?: ObjectId) {
     const user = WebSession.getUser(session);
-    const upload = await Upload.create(user, upload_url, target);
-    return { msg: upload.msg, upload: upload.upload };
+    const media = await Media.create(user, media_url, target);
+    return { msg: media.msg, media: media.media };
   }
 
-  @Router.patch("/uploads/:_id")
-  async updateUpload(session: WebSessionDoc, _id: ObjectId, update: Partial<UploadDoc>) {
+  @Router.patch("/media/:_id")
+  async updateMedia(session: WebSessionDoc, _id: ObjectId, update: Partial<MediaDoc>) {
     const user = WebSession.getUser(session);
-    await Upload.isCreator(_id, user);
-    return await Upload.update(_id, update);
+    await Media.isCreator(_id, user);
+    return await Media.update(_id, update);
   }
 
-  @Router.delete("/uploads/:_id")
-  async deleteUpload(session: WebSessionDoc, _id: ObjectId) {
+  @Router.delete("/media/:_id")
+  async deleteMedia(session: WebSessionDoc, _id: ObjectId) {
     const user = WebSession.getUser(session);
-    await Upload.isCreator(_id, user);
-    return Upload.delete(_id, user);
+    await Media.isCreator(_id, user);
+    return Media.delete(_id, user);
   }
 
   //// ACTIVITIES ////
