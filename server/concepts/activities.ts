@@ -3,27 +3,22 @@ import { Filter, ObjectId } from "mongodb";
 import DocCollection, { BaseDoc } from "../framework/doc";
 import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 
-export interface ActivityOptions {
-  location?: ObjectId;
-}
-
 export interface ActivityDoc extends BaseDoc {
   name: string;
-  location: ObjectId;
+  location: string;
   members: Array<ObjectId>;
   creator: ObjectId;
   managers: Array<ObjectId>;
   carpools: Array<ObjectId>;
   join_code: String;
-  options: ActivityOptions;
 }
 
 export default class ActivityConcept {
   public readonly activities = new DocCollection<ActivityDoc>("activities");
 
-  async create(creator: ObjectId, name: string, join_code: string, options?: ActivityOptions) {
+  async create(creator: ObjectId, name: string, join_code: string, location: string) {
     await this.canCreate(name);
-    const _id = await this.activities.createOne({ creator: creator, name: name, join_code: join_code, managers: [creator], members: [creator], carpools: [], options });
+    const _id = await this.activities.createOne({ creator: creator, name: name, join_code: join_code, managers: [creator], members: [creator], carpools: [], location: location });
     return { msg: `Activity '${name}' was successfully created!`, activity: await this.activities.readOne({ _id }) };
   }
 
