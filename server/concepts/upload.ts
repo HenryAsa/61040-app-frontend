@@ -6,13 +6,14 @@ import { NotAllowedError, NotFoundError } from "./errors";
 export interface UploadDoc extends BaseDoc {
   creator: ObjectId;
   upload_url: String;
+  target?: ObjectId;
 }
 
 export default class UploadConcept {
   public readonly uploads = new DocCollection<UploadDoc>("uploads");
 
-  async create(creator: ObjectId, upload_url: string) {
-    const _id = await this.uploads.createOne({ creator: creator, upload_url: upload_url });
+  async create(creator: ObjectId, upload_url: string, target?: ObjectId) {
+    const _id = await this.uploads.createOne({ creator: creator, upload_url: upload_url, target: target });
     return { msg: `Upload was successfully created!`, upload: await this.uploads.readOne({ _id }) };
   }
 
@@ -27,6 +28,14 @@ export default class UploadConcept {
     const uploads = await this.uploads.readMany({ creator: user });
     if (uploads.length === 0) {
       throw new NotFoundError(`This user has not uploaded any uploads`);
+    }
+    return uploads;
+  }
+
+  async getUploadsByTarget(target: ObjectId) {
+    const uploads = await this.uploads.readMany({ target: target });
+    if (uploads.length === 0) {
+      throw new NotFoundError(`This target does not have any associated uploads`);
     }
     return uploads;
   }

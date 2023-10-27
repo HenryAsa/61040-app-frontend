@@ -209,16 +209,21 @@ class Routes {
     return { msg: `Successfully retrieved the uploads ${user.username} uploaded`, uploads: uploads };
   }
 
-  @Router.get("/uploads/id/:id")
+  @Router.get("/uploads/byId/:id")
   async getUploadById(id: ObjectId) {
     const upload = await Upload.getUploadById(id);
     return { msg: `Successfully retrieved the upload '${id}'`, upload: upload };
   }
 
+  @Router.get("/uploads/byTarget/:target")
+  async getUploadsByTarget(target: ObjectId) {
+    return await Upload.getUploadsByTarget(target);
+  }
+
   @Router.post("/uploads")
-  async createUpload(session: WebSessionDoc, name: string, join_code: string, options?: UploadOptions) {
+  async createUpload(session: WebSessionDoc, upload_url: string, target?: ObjectId) {
     const user = WebSession.getUser(session);
-    const upload = await Upload.create(user, name, join_code, options);
+    const upload = await Upload.create(user, upload_url, target);
     return { msg: upload.msg, upload: upload.upload };
   }
 
