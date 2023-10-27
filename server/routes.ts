@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import { Router, getExpressRouter } from "./framework/router";
 
 import { Activity, Carpool, Comment, Friend, Location, Post, Media, User, WebSession } from "./app";
-import { ActivityDoc, ActivityOptions } from "./concepts/activities";
+import { ActivityDoc } from "./concepts/activities";
 import { CarpoolDoc } from "./concepts/carpools";
 import { CommentDoc, CommentOptions } from "./concepts/comment";
 import { PostDoc, PostOptions } from "./concepts/post";
@@ -282,10 +282,10 @@ class Routes {
     return { msg: `Successfully retrieved the activity '${name}'`, activity: activity };
   }
 
-  @Router.post("/activities")
-  async createActivity(session: WebSessionDoc, name: string, join_code: string, options?: ActivityOptions) {
+  @Router.post("/activity")
+  async createActivity(session: WebSessionDoc, name: string, join_code: string, location: string) {
     const user = WebSession.getUser(session);
-    const activity = await Activity.create(user, name, join_code, options);
+    const activity = await Activity.create(user, name, join_code, location);
     return { msg: activity.msg, activity: activity.activity };
   }
 

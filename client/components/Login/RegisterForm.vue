@@ -2,7 +2,9 @@
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
+import FileUploadBox from "../Media/FileUploadBox.vue";
 import ImageUploader from "../Images/ImageUploader.vue";
+import newUploadMedia from "../Media/newUploadMedia.vue";
 import PasswordValidation from "./PasswordValidation.vue";
 
 const first_name = ref("");
@@ -54,9 +56,15 @@ function assignPassword(userPassword: string) {
       <div class="pure-control-group">
         <PasswordValidation @userPassword="assignPassword" id="aligned-password" placeholder="Password" required></PasswordValidation>
       </div>
-      <div class="pure-control-group">
+      <!-- <div class="pure-control-group">
         <ImageUploader @update:imageURL="assignURL"></ImageUploader>
+      </div> -->
+      <div class="pure-control-group">
+        <newUploadMedia @update:imageURL="assignURL"></newUploadMedia>
       </div>
+      <!-- <div class="pure-control-group">
+        <FileUploadBox @update:imageURL="assignURL"></FileUploadBox>
+      </div> -->
       <div class="pure-controls">
         <button type="submit" class="pure-button pure-button-primary">Register</button>
       </div>

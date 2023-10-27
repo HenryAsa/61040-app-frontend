@@ -15,6 +15,6 @@ export const Comment = new CommentConcept();
 export const Friend = new FriendConcept();
 export const Location = new LocationConcept();
 export const Post = new PostConcept();
-export const Upload = new MediaConcept();
+export const Media = new MediaConcept();
 export const User = new UserConcept();
 export const WebSession = new WebSessionConcept();

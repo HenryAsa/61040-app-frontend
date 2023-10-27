@@ -52,10 +52,82 @@ const uploadImage = async () => {
     });
   });
 };
+
+// const dropZoneId: string = "drop-zone";
+// const buttonId: string = "clickHere";
+// const mouseOverClass: string = "mouse-over";
+
+// const dropZone: JQuery<HTMLElement> = $("#" + dropZoneId);
+// const ooleft: number = dropZone.offset().left;
+// const ooright: number = dropZone.outerWidth() + ooleft;
+// const ootop: number = dropZone.offset().top;
+// const oobottom: number = dropZone.outerHeight() + ootop;
+// const inputFile: JQuery<HTMLElement> = dropZone.find("input");
+// document.getElementById(dropZoneId).addEventListener(
+//   "dragover",
+//   function (e: DragEvent) {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     dropZone.addClass(mouseOverClass);
+//     const x: number = e.pageX;
+//     const y: number = e.pageY;
+
+//     if (!(x < ooleft || x > ooright || y < ootop || y > oobottom)) {
+//       inputFile.offset({ top: y - 15, left: x - 100 });
+//     } else {
+//       inputFile.offset({ top: -400, left: -400 });
+//     }
+//   },
+//   true,
+// );
+
+// if (buttonId != "") {
+//   const clickZone: JQuery<HTMLElement> = $("#" + buttonId);
+
+//   const oleft: number = clickZone.offset().left;
+//   const oright: number = clickZone.outerWidth() + oleft;
+//   const otop: number = clickZone.offset().top;
+//   const obottom: number = clickZone.outerHeight() + otop;
+
+//   $("#" + buttonId).mousemove(function (e: MouseEvent) {
+//     const x: number = e.pageX;
+//     const y: number = e.pageY;
+//     if (!(x < oleft || x > oright || y < otop || y > obottom)) {
+//       inputFile.offset({ top: y - 15, left: x - 160 });
+//     } else {
+//       inputFile.offset({ top: -400, left: -400 });
+//     }
+//   });
+// }
+
+// document.getElementById(dropZoneId).addEventListener(
+//   "drop",
+//   function (e: DragEvent) {
+//     $("#" + dropZoneId).removeClass(mouseOverClass);
+//   },
+//   true,
+// );
+
+// // image_uploader.ondragover = image_uploader.ondragenter = function(evt) {
+// //   evt.preventDefault();
+// // };
+
+// // dropContainer.ondrop = function(evt) {
+// //   // pretty simple -- but not for IE :(
+// //   fileInput.files = evt.dataTransfer.files;
+
+// //   // If you want to use some of the dropped files
+// //   const dT = new DataTransfer();
+// //   dT.items.add(evt.dataTransfer.files[0]);
+// //   dT.items.add(evt.dataTransfer.files[3]);
+// //   fileInput.files = dT.files;
+
+// //   evt.preventDefault();
+// // };
 </script>
 
 <template>
-  <div>
+  <div id="image_uploader">
     <v-flex></v-flex>
     <input type="file" @change="handleFileChange" />
     <img class="profile_photo" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
@@ -74,5 +146,11 @@ const uploadImage = async () => {
   display: block;
   margin: 1rem auto;
   max-width: 100%;
+}
+#image_uploader {
+  border: 3px solid #e3e8f4;
+  border-radius: 16px;
+  display: block;
+  margin: 1rem auto;
 }
 </style>
