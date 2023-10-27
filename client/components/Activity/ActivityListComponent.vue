@@ -18,7 +18,7 @@ let searchActivityName = ref("");
 
 async function getActivities(activityName?: string) {
   let activityResults;
-  let query = activityName !== undefined ? { name: activityName } : {};
+  let query: Record<string, string> = activityName !== undefined ? { name: activityName } : {};
   try {
     activityResults = await fetchy("api/activitiesSearchByName", "GET", { query });
   } catch (_) {
