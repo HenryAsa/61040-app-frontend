@@ -24,13 +24,14 @@ onBeforeMount(async () => {
 <template>
   <header>
     <nav>
-      <div class="title">
-        <img src="@/assets/images/logo.svg" />
-        <RouterLink :to="{ name: 'Home' }">
-          <h1>Community Carpool</h1>
-        </RouterLink>
-      </div>
-      <ul>
+      <RouterLink :to="{ name: 'Home' }">
+        <div class="title">
+          <!-- <img src="@/assets/images/logo.svg" /> -->
+          <img src="@/assets/images/carpool.jpg" />
+          <h1 class="gradient-text">Community Carpool</h1>
+        </div>
+      </RouterLink>
+      <ul class="nav-items">
         <li>
           <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
         </li>
@@ -54,7 +55,7 @@ onBeforeMount(async () => {
 
 nav {
   padding: 1em 2em;
-  background-color: lightgray;
+  background: linear-gradient(90deg, #4eb5ef, #bcf0b7);
   display: flex;
   align-items: center;
 }
@@ -71,13 +72,18 @@ h1 {
 }
 
 img {
-  height: 2em;
+  height: 3em;
+  border-radius: 8px;
 }
 
 a {
-  font-size: large;
-  color: black;
   text-decoration: none;
+}
+
+.underline {
+  padding: 5px;
+  border-radius: 8px;
+  border: 5px solid white;
 }
 
 ul {
@@ -86,10 +92,44 @@ ul {
   display: flex;
   align-items: center;
   flex-direction: row;
-  gap: 1em;
+  column-gap: 1em;
 }
 
-.underline {
-  text-decoration: underline;
+.nav-items {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.gradient-text {
+  background: -webkit-linear-gradient(0deg, red, royalblue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+a {
+  background: -webkit-linear-gradient(0deg, royalblue, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+a::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background-color: white;
+  bottom: 0;
+  left: 0;
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.4s ease-in-out;
+}
+
+a:hover::before {
+  transform-origin: left;
+  transform: scaleX(1);
 }
 </style>
