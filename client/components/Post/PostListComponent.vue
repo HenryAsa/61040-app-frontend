@@ -5,7 +5,7 @@ import PostComponent from "@/components/Post/PostComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
-import { computed, onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref } from "vue";
 import SearchPostForm from "./SearchPostForm.vue";
 
 const { isLoggedIn } = storeToRefs(useUserStore());
@@ -16,7 +16,7 @@ let editing = ref("");
 let searchAuthor = ref("");
 
 async function getPosts(author?: string) {
-  let query: Record<string, string> = author !== undefined ? { author } : {};
+  let query: Record<string, string> = author !== undefined ? { author: author } : {};
   let postResults;
   try {
     postResults = await fetchy("api/posts", "GET", { query });
