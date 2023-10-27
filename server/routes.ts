@@ -2,12 +2,12 @@ import { ObjectId } from "mongodb";
 
 import { Router, getExpressRouter } from "./framework/router";
 
-import { Activity, Carpool, Comment, Friend, Location, Post, Media, User, WebSession } from "./app";
+import { Activity, Carpool, Comment, Friend, Location, Media, Post, User, WebSession } from "./app";
 import { ActivityDoc } from "./concepts/activities";
 import { CarpoolDoc } from "./concepts/carpools";
-import { CommentDoc, CommentOptions } from "./concepts/comment";
-import { PostDoc, PostOptions } from "./concepts/post";
+import { CommentDoc } from "./concepts/comment";
 import { MediaDoc } from "./concepts/media";
+import { PostDoc, PostOptions } from "./concepts/post";
 import { UserDoc } from "./concepts/user";
 import { WebSessionDoc } from "./concepts/websession";
 
@@ -249,6 +249,17 @@ class Routes {
     if (creator) {
       const id = (await User.getUserByUsername(creator))._id;
       activities = await Activity.getActivitiesByCreator(id);
+    } else {
+      activities = await Activity.getActivities({});
+    }
+    return activities;
+  }
+
+  @Router.get("/activitiesSearchByName")
+  async getActivitiesByName(name?: string) {
+    let activities;
+    if (name) {
+      activities = await Activity.searchActivitiesByName(name);
     } else {
       activities = await Activity.getActivities({});
     }

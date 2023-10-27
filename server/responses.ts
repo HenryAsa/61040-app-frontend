@@ -1,4 +1,5 @@
-import { User } from "./app";
+import { Activity, User } from "./app";
+import { ActivityDoc } from "./concepts/activities";
 import { AlreadyFriendsError, FriendNotFoundError, FriendRequestAlreadyExistsError, FriendRequestDoc, FriendRequestNotFoundError } from "./concepts/friend";
 import { PostAuthorNotMatchError, PostDoc } from "./concepts/post";
 import { Router } from "./framework/router";

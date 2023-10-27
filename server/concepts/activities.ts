@@ -48,6 +48,17 @@ export default class ActivityConcept {
     return this.sanitizeActivities(activities);
   }
 
+  async searchActivitiesByName(name: string) {
+    let query: Filter<ActivityDoc> = {};
+    if (name) {
+      query = { "name": { $regex: `${name}`, $options: "i" } };
+    } else {
+      query = {};
+    }
+    const activities = await this.activities.readMany(query);
+    return await this.sanitizeActivities(activities);
+  }
+
   async getActivitiesByMemberId(user: ObjectId) {
     const activities = await this.activities.readMany({ members: { $elemMatch: { $eq: user } } });
     if (activities.length === 0) {
