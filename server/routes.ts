@@ -5,7 +5,7 @@ import { Router, getExpressRouter } from "./framework/router";
 import { Activity, Carpool, Comment, Friend, Location, Media, Post, User, WebSession } from "./app";
 import { ActivityDoc } from "./concepts/activities";
 import { CarpoolDoc } from "./concepts/carpools";
-import { CommentDoc } from "./concepts/comment";
+import { CommentDoc, CommentOptions } from "./concepts/comment";
 import { MediaDoc } from "./concepts/media";
 import { PostDoc, PostOptions } from "./concepts/post";
 import { UserDoc } from "./concepts/user";
