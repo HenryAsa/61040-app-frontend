@@ -86,9 +86,9 @@ const updatePassword = () => {
 
 <template>
   <div class="password-setter box-shadow">
-    <label for="new">Password</label>
-    <input :type="state.passwordType" v-model="state.password" name="new" placeholder="Password" @change="updatePassword" required />
-    <div class="show-box">
+    <div class="input-with-button">
+      <label for="new">Password</label>
+      <input :type="state.passwordType" v-model="state.password" name="new" placeholder="Password" @change="updatePassword" required />
       <button @click="showPassword">{{ state.passwordType === "password" ? "Show Password" : "Hide Password" }}</button>
     </div>
     <label for="strength">
@@ -112,6 +112,10 @@ const updatePassword = () => {
 <style scoped>
 p {
   margin: 0em;
+}
+
+.input-with-button button {
+  margin-left: 10px; /* Adjust the margin as needed for spacing */
 }
 
 .checked {

@@ -24,47 +24,68 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-const mediaUpload = ref();
-const mediaURL = ref();
+const imageUpload = ref();
+const imageURL = ref();
 
-const emit = defineEmits(["update:mediaURL", "createdMedia"]);
-
-import { fetchy } from "../../utils/fetchy";
-
-const createMediaInDB = async () => {
-  try {
-    await fetchy(`api/media`, "POST");
-  } catch {
-    return;
-  }
-  emit("createdMedia");
-};
+const emit = defineEmits(["update:imageURL"]);
 
 async function handleFileChange(event: Event) {
   if (event.target) {
     const target = event.target as HTMLInputElement;
     if (target?.files?.length) {
-      mediaUpload.value = target.files[0];
-      await uploadMedia();
+      imageUpload.value = target.files[0];
+      await uploadImage();
     }
   }
 }
 
-const uploadMedia = async () => {
-  const file = mediaUpload.value as File;
-  const mediaRef = firebaseRef(storage, `media/${file.name}`);
+const uploadImage = async () => {
+  const file = imageUpload.value as File;
+  const imageRef = firebaseRef(storage, `images/${file.name}`);
 
-  await uploadBytes(mediaRef, mediaUpload.value).then(async (response) => {
+  await uploadBytes(imageRef, imageUpload.value).then(async (response) => {
     console.log(response);
     await getDownloadURL(firebaseRef(storage, response.ref.fullPath)).then(async (url) => {
       console.log(`GOT THE URL ${url}`);
-      mediaURL.value = url;
-      emit("update:mediaURL", url);
+      imageURL.value = url;
+      emit("update:imageURL", url);
     });
   });
 };
 </script>
 
 <template>
+  <div id="media_uploader">
     <v-flex></v-flex>
+    <h3 v-if="!imageURL">Please Upload a Profile Picture!</h3>
+    <h3 v-if="imageURL">Here is a preview of what your profile picture will look like</h3>
+    <input type="file" @change="handleFileChange" />
+    <img class="profile_photo" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
+    <br />
+  </div>
 </template>
+
+<style>
+.profile_photo {
+  width: 20vw;
+  height: 20vw;
+  object-fit: cover;
+  align-self: auto;
+  border: 3px solid #e3e8f4;
+  border-radius: 16px;
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+}
+#media_uploader {
+  border: 3px solid #e3e8f4;
+  border-radius: 16px;
+  display: block;
+  margin: 1rem auto;
+  padding: 1em;
+}
+.h3 {
+  text-align: center;
+  text: center;
+}
+</style>

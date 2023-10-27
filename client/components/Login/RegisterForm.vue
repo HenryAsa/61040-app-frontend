@@ -2,9 +2,7 @@
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { ref } from "vue";
-import FileUploadBox from "../Media/FileUploadBox.vue";
-import ImageUploader from "../Images/ImageUploader.vue";
-import newUploadMedia from "../Media/newUploadMedia.vue";
+import UploadMedia from "../Media/UploadMedia.vue";
 import PasswordValidation from "./PasswordValidation.vue";
 
 const first_name = ref("");
@@ -56,17 +54,11 @@ function assignPassword(userPassword: string) {
       <div class="pure-control-group">
         <PasswordValidation @userPassword="assignPassword" id="aligned-password" placeholder="Password" required></PasswordValidation>
       </div>
-      <!-- <div class="pure-control-group">
-        <ImageUploader @update:imageURL="assignURL"></ImageUploader>
-      </div> -->
       <div class="pure-control-group">
-        <newUploadMedia @update:imageURL="assignURL"></newUploadMedia>
+        <UploadMedia @update:imageURL="assignURL" required></UploadMedia>
       </div>
-      <!-- <div class="pure-control-group">
-        <FileUploadBox @update:imageURL="assignURL"></FileUploadBox>
-      </div> -->
       <div class="pure-controls">
-        <button type="submit" class="pure-button pure-button-primary">Register</button>
+        <button id="Register" type="submit" class="pure-button pure-button-primary">Register</button>
       </div>
     </fieldset>
   </form>
@@ -76,5 +68,23 @@ function assignPassword(userPassword: string) {
 h3 {
   display: flex;
   justify-content: center;
+}
+
+.button {
+  border: 3px;
+  border-radius: 16px;
+}
+
+#Register {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
 }
 </style>
