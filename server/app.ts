@@ -4,6 +4,7 @@ import CommentConcept from "./concepts/comment";
 import FriendConcept from "./concepts/friend";
 import LocationConcept from "./concepts/location";
 import PostConcept from "./concepts/post";
+import UploadConcept from "./concepts/file";
 import UserConcept from "./concepts/user";
 import WebSessionConcept from "./concepts/websession";
 
@@ -14,5 +15,6 @@ export const Comment = new CommentConcept();
 export const Friend = new FriendConcept();
 export const Location = new LocationConcept();
 export const Post = new PostConcept();
+export const Upload = new UploadConcept();
 export const User = new UserConcept();
 export const WebSession = new WebSessionConcept();

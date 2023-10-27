@@ -2,11 +2,12 @@ import { ObjectId } from "mongodb";
 
 import { Router, getExpressRouter } from "./framework/router";
 
-import { Activity, Carpool, Comment, Friend, Location, Post, User, WebSession } from "./app";
+import { Activity, Carpool, Comment, Friend, Location, Post, Upload, User, WebSession } from "./app";
 import { ActivityDoc, ActivityOptions } from "./concepts/activities";
-import { CarpoolDoc, CarpoolOptions } from "./concepts/carpools";
+import { CarpoolDoc } from "./concepts/carpools";
 import { CommentDoc, CommentOptions } from "./concepts/comment";
 import { PostDoc, PostOptions } from "./concepts/post";
+import { UploadDoc } from "./concepts/upload";
 import { UserDoc } from "./concepts/user";
 import { WebSessionDoc } from "./concepts/websession";
 
@@ -185,6 +186,54 @@ class Routes {
     // const user = WebSession.getUser(session);
     // await Location.isAuthor(user, _id);
     return Location.delete(_id);
+  }
+
+  //// UPLOADS ////
+
+  @Router.get("/uploads")
+  async getUploads(creator?: string) {
+    let uploads;
+    if (creator) {
+      const id = (await User.getUserByUsername(creator))._id;
+      uploads = await Upload.getUploadsByCreator(id);
+    } else {
+      uploads = await Upload.getUploads({});
+    }
+    return uploads;
+  }
+
+  @Router.get("/uploads/:username")
+  async getUploadsByUsername(username: string) {
+    const user = await User.getUserByUsername(username);
+    const uploads = await Upload.getUploadsByCreator(user._id);
+    return { msg: `Successfully retrieved the uploads ${user.username} uploaded`, uploads: uploads };
+  }
+
+  @Router.get("/uploads/id/:id")
+  async getUploadById(id: ObjectId) {
+    const upload = await Upload.getUploadById(id);
+    return { msg: `Successfully retrieved the upload '${id}'`, upload: upload };
+  }
+
+  @Router.post("/uploads")
+  async createUpload(session: WebSessionDoc, name: string, join_code: string, options?: UploadOptions) {
+    const user = WebSession.getUser(session);
+    const upload = await Upload.create(user, name, join_code, options);
+    return { msg: upload.msg, upload: upload.upload };
+  }
+
+  @Router.patch("/uploads/:_id")
+  async updateUpload(session: WebSessionDoc, _id: ObjectId, update: Partial<UploadDoc>) {
+    const user = WebSession.getUser(session);
+    await Upload.isCreator(_id, user);
+    return await Upload.update(_id, update);
+  }
+
+  @Router.delete("/uploads/:_id")
+  async deleteUpload(session: WebSessionDoc, _id: ObjectId) {
+    const user = WebSession.getUser(session);
+    await Upload.isCreator(_id, user);
+    return Upload.delete(_id, user);
   }
 
   //// ACTIVITIES ////
