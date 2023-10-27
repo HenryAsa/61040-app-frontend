@@ -2,6 +2,7 @@
 import CreateActivityForm from "@/components/Activity/CreateActivityForm.vue";
 // import EditActivityForm from "@/components/Activity/EditActivityForm.vue";
 import ActivityComponent from "@/components/Activity/ActivityComponent.vue";
+import SearchActivity from "@/components/Activity/SearchActivity.vue";
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { storeToRefs } from "pinia";
@@ -13,17 +14,17 @@ const { isLoggedIn } = storeToRefs(useUserStore());
 const loaded = ref(false);
 let activities = ref<Array<Record<string, string>>>([]);
 let editing = ref("");
-let searchAuthor = ref("");
+let searchActivityName = ref("");
 
-async function getActivities(author?: string) {
-  let query: Record<string, string> = author !== undefined ? { author } : {};
+async function getActivities(activityName?: string) {
   let activityResults;
+  let query = activityName !== undefined ? { name: activityName } : {};
   try {
-    activityResults = await fetchy("api/activities", "GET");
+    activityResults = await fetchy("api/activitiesSearchByName", "GET", { query });
   } catch (_) {
     return;
   }
-  searchAuthor.value = author ? author : "";
+  searchActivityName.value = activityName ? activityName : "";
   activities.value = activityResults;
 }
 
@@ -43,14 +44,14 @@ onBeforeMount(async () => {
     <CreateActivityForm @refreshActivities="getActivities" />
   </section>
   <div class="row">
-    <h2 v-if="!searchAuthor">Activities:</h2>
-    <h2 v-else>Activities by {{ searchAuthor }}:</h2>
-    <SearchActivityForm @getActivitiesByAuthor="getActivities" />
+    <h2 v-if="!searchActivityName">Activities:</h2>
+    <h2 v-else>Activities by {{ searchActivityName }}:</h2>
+    <SearchActivity v-model="searchActivityName" @getActivitiesByName="getActivities" />
   </div>
   <section class="activities" v-if="loaded && activities.length !== 0">
     <article v-for="activity in activities" :key="activity._id">
       <ActivityComponent v-if="editing !== activity._id" :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" />
-      <EditActivityForm v-else :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" />
+      <!-- <EditActivityForm v-else :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" /> -->
     </article>
   </section>
   <p v-else-if="loaded">No activities found</p>
