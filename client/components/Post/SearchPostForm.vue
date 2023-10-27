@@ -6,13 +6,13 @@ const emit = defineEmits(["getPostsByAuthor"]);
 </script>
 
 <template>
-  <form @submit.prevent="emit('getPostsByAuthor', author)" class="pure-form">
-    <fieldset>
-      <legend>Search by Author</legend>
-      <input id="author" type="text" v-model="author" placeholder="Username" />
-      <button type="submit" class="pure-button pure-button-primary">Search</button>
-    </fieldset>
-  </form>
+  <!-- <form @submit.prevent="emit('getPostsByAuthor', author)" class="pure-form"> -->
+  <fieldset>
+    <legend>Search by Author</legend>
+    <input id="author" @input="emit('getPostsByAuthor', author)" type="text" v-model="author" placeholder="Username" />
+    <!-- <button type="submit" class="pure-button pure-button-primary">Search</button> -->
+  </fieldset>
+  <!-- </form> -->
 </template>
 
 <style scoped>
