@@ -8,10 +8,19 @@ export const useUserStore = defineStore(
   () => {
     const currentUsername = ref("");
 
+    const currentUserFirstName = ref("");
+
+    const currentUserLastName = ref("");
+
+    const currentUserProfilePhoto = ref("");
+
     const isLoggedIn = computed(() => currentUsername.value !== "");
 
     const resetStore = () => {
       currentUsername.value = "";
+      currentUserFirstName.value = "";
+      currentUserLastName.value = "";
+      currentUserProfilePhoto.value = "";
     };
 
     const createUser = async (username: string, password: string, first_name: string, last_name: string, profile_photo: string) => {
@@ -28,10 +37,16 @@ export const useUserStore = defineStore(
 
     const updateSession = async () => {
       try {
-        const { username } = await fetchy("api/session", "GET", { alert: false });
+        const { username, first_name, last_name, profile_photo } = await fetchy("api/session", "GET", { alert: false });
         currentUsername.value = username;
+        currentUserFirstName.value = first_name;
+        currentUserLastName.value = last_name;
+        currentUserProfilePhoto.value = profile_photo;
       } catch {
         currentUsername.value = "";
+        currentUserFirstName.value = "";
+        currentUserLastName.value = "";
+        currentUserProfilePhoto.value = "";
       }
     };
 
@@ -51,6 +66,9 @@ export const useUserStore = defineStore(
 
     return {
       currentUsername,
+      currentUserFirstName,
+      currentUserLastName,
+      currentUserProfilePhoto,
       isLoggedIn,
       createUser,
       loginUser,
