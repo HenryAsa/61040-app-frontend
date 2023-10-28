@@ -5,12 +5,12 @@ import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 
 export interface ActivityDoc extends BaseDoc {
   name: string;
+  join_code: string;
   location: string;
   members: Array<ObjectId>;
   creator: ObjectId;
   managers: Array<ObjectId>;
   carpools: Array<ObjectId>;
-  join_code: String;
 }
 
 export default class ActivityConcept {

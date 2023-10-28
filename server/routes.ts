@@ -252,7 +252,7 @@ class Routes {
     } else {
       activities = await Activity.getActivities({});
     }
-    return activities;
+    return Responses.activities(activities);
   }
 
   @Router.get("/activitiesSearchByName")
@@ -263,7 +263,7 @@ class Routes {
     } else {
       activities = await Activity.getActivities({});
     }
-    return activities;
+    return Responses.activities(activities);
   }
 
   @Router.get("/activitiesUserIsMemberOf")

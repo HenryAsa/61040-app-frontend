@@ -38,6 +38,25 @@ export default class Responses {
     const usernames = await User.idsToUsernames(from.concat(to));
     return requests.map((request, i) => ({ ...request, from: usernames[i], to: usernames[i + requests.length] }));
   }
+
+  /**
+   * Convert ActivityDoc into more readable format for the frontend by converting the author id into a username.
+   */
+  static async activity(activity: ActivityDoc | null) {
+    if (!activity) {
+      return activity;
+    }
+    const users = await User.idsToUsernames(activity.members);
+    console.log(users);
+    return { ...activity, members: users };
+  }
+
+  /**
+   * Same as {@link activity} but for an array of ActivityDoc for improved performance.
+   */
+  static async activities(activities: ActivityDoc[]) {
+    return await Promise.all(activities.map((activity) => this.activity(activity)));
+  }
 }
 
 Router.registerError(PostAuthorNotMatchError, async (e) => {
