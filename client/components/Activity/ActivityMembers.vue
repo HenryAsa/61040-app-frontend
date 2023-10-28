@@ -39,10 +39,11 @@ img {
   justify-content: space-between;
   align-items: center;
   border-radius: 16px;
-  border: 3px solid royalblue;
+  /* border: 3px solid royalblue; */
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.3rem;
+  background-color: #d5ffce;
 }
 </style>

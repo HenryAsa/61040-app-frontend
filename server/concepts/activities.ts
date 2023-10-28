@@ -248,7 +248,7 @@ export class ActivityMemberNotMatchError extends NotAllowedError {
     public readonly member: ObjectId,
     public readonly _id: ObjectId,
   ) {
-    super("{0} is not the member of activity {1}!", member, _id);
+    super("This user is not the member of activity!", member, _id);
   }
 }
 
@@ -257,12 +257,12 @@ export class AlreadyMemberError extends NotAllowedError {
     public readonly user: ObjectId,
     public readonly _id: ObjectId,
   ) {
-    super("{0} is already in the activity {1}!", user, _id);
+    super("This user is already in the activity!", user, _id);
   }
 }
 
 export class InvalidJoinCodeError extends BadValuesError {
   constructor(public readonly join_code: ObjectId) {
-    super("The Join Code to join {0} is incorrect!", join_code);
+    super("The Join Code to join this activity is incorrect!", join_code);
   }
 }

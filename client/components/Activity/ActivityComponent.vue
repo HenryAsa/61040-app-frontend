@@ -4,6 +4,7 @@ import { fetchy } from "@/utils/fetchy";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
 import ActivityMembers from "./ActivityMembers.vue";
+import JoinActivity from "./JoinActivity.vue";
 
 const props = defineProps(["activity"]);
 const emit = defineEmits(["editActivity", "refreshActivities"]);
@@ -29,18 +30,23 @@ function isMember() {
   <p class="name">{{ props.activity.name.toString() }}</p>
   <!-- <p>{{ props.activity.members.map((member) => member) }}</p> -->
   <div class="base">
-    <menu v-if="props.activity.members.includes(currentUsername)">
-      <li><button class="btn-small pure-button" @click="emit('editActivity', props.activity._id)">Edit</button></li>
-      <li><button class="button-error btn-small pure-button" @click="deleteActivity">Delete</button></li>
-    </menu>
-    <article v-for="member in props.activity.members" :key="member">
-      <ActivityMembers :user="member" />
-    </article>
+    <div class="members-section">
+      <p class="heading">Members</p>
+      <article class="members" v-for="member in props.activity.members" :key="member">
+        <ActivityMembers :user="member" />
+      </article>
+    </div>
     <article class="timestamp">
       <p v-if="props.activity.dateCreated !== props.activity.dateUpdated">Edited on: {{ formatDate(props.activity.dateUpdated) }}</p>
       <p v-else>Created on: {{ formatDate(props.activity.dateCreated) }}</p>
     </article>
-    <p v-if="isMember()">Test</p>
+    <menu v-if="isMember()">
+      <li><button class="btn-small pure-button" @click="emit('editActivity', props.activity._id)">Edit</button></li>
+      <li><button class="button-error btn-small pure-button" @click="deleteActivity">Delete</button></li>
+    </menu>
+    <menu>
+      <JoinActivity :activity="props.activity" />
+    </menu>
   </div>
 </template>
 
@@ -51,7 +57,25 @@ p {
 
 .name {
   font-weight: bold;
+  font-size: 1.5em;
+}
+
+.heading {
+  font-weight: bold;
   font-size: 1.2em;
+  padding-bottom: 0.5em;
+}
+
+.members-section {
+  padding: 0.5em;
+  border-radius: 16px;
+  border: 3px solid;
+}
+
+.members {
+  display: flex;
+  flex-direction: row;
+  padding: 0.2em;
 }
 
 menu {
