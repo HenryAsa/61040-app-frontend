@@ -40,7 +40,6 @@ onBeforeMount(async () => {
 
 <template>
   <section v-if="isLoggedIn">
-    <h2>Create an activity:</h2>
     <CreateActivityForm @refreshActivities="getActivities" />
   </section>
   <div class="row">

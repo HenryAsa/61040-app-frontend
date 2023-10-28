@@ -36,12 +36,18 @@ function isMember() {
         <ActivityMembers :user="member" />
       </article>
     </div>
+    <div class="members-section">
+      <p class="heading">Managers</p>
+      <article class="managers" v-for="manager in props.activity.managers" :key="manager">
+        <ActivityMembers :user="manager" />
+      </article>
+    </div>
     <article class="timestamp">
       <p v-if="props.activity.dateCreated !== props.activity.dateUpdated">Edited on: {{ formatDate(props.activity.dateUpdated) }}</p>
       <p v-else>Created on: {{ formatDate(props.activity.dateCreated) }}</p>
     </article>
     <menu v-if="isMember()">
-      <li><button class="btn-small pure-button" @click="emit('editActivity', props.activity._id)">Edit</button></li>
+      <!-- <li><button class="btn-small pure-button" @click="emit('editActivity', props.activity._id)">Edit</button></li> -->
       <li><button class="button-error btn-small pure-button" @click="deleteActivity">Delete</button></li>
     </menu>
     <menu>
