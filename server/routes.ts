@@ -266,9 +266,8 @@ class Routes {
     return activities;
   }
 
-  @Router.get("/activities/members/")
+  @Router.get("/activitiesUserIsMemberOf")
   async getActivitiesUserIsMemberOf(session: WebSessionDoc) {
-    console.log("HERE");
     const user = WebSession.getUser(session);
     const activities = await Activity.getActivitiesByMemberId(user);
     return { msg: `Successfully retrieved the activities the current user is a member of`, activities: activities };
