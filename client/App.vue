@@ -8,7 +8,7 @@ import { RouterLink, RouterView, useRoute } from "vue-router";
 const currentRoute = useRoute();
 const currentRouteName = computed(() => currentRoute.name);
 const userStore = useUserStore();
-const { isLoggedIn } = storeToRefs(userStore);
+const { isLoggedIn, currentUserProfilePhoto } = storeToRefs(userStore);
 const { toast } = storeToRefs(useToastStore());
 
 // Make sure to update the session before mounting the app in case the user is already logged in
@@ -36,7 +36,9 @@ onBeforeMount(async () => {
           <RouterLink :to="{ name: 'Home' }" :class="{ underline: currentRouteName == 'Home' }"> Home </RouterLink>
         </li>
         <li v-if="isLoggedIn">
-          <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }"> Settings </RouterLink>
+          <RouterLink :to="{ name: 'Settings' }" :class="{ underline: currentRouteName == 'Settings' }">
+            <img class="profile_picture" v-bind:src="currentUserProfilePhoto" />
+          </RouterLink>
         </li>
         <li v-else>
           <RouterLink :to="{ name: 'Login' }" :class="{ underline: currentRouteName == 'Login' }"> Login </RouterLink>
@@ -54,7 +56,7 @@ onBeforeMount(async () => {
 @import "./assets/toast.css";
 
 nav {
-  padding: 1em 2em;
+  padding: 0em 2em;
   background: linear-gradient(90deg, #4eb5ef, #bcf0b7);
   display: flex;
   align-items: center;
@@ -74,6 +76,16 @@ h1 {
 img {
   height: 3em;
   border-radius: 8px;
+}
+
+.profile_picture {
+  width: 5vw;
+  height: 5vw;
+  object-fit: cover;
+  align-self: auto;
+  border: 3px solid #e3e8f4;
+  border-radius: 16px;
+  display: block;
 }
 
 a {
