@@ -42,7 +42,7 @@ export default class Responses {
   /**
    * Convert ActivityDoc into more readable format for the frontend by converting the author id into a username.
    */
-  static async activity(activity: ActivityDoc | null) {
+  static async activity(activity: SanitizedActivityDoc | null) {
     if (!activity) {
       return activity;
     }
@@ -54,7 +54,7 @@ export default class Responses {
   /**
    * Same as {@link activity} but for an array of ActivityDoc for improved performance.
    */
-  static async activities(activities: ActivityDoc | ActivityDoc[] | null) {
+  static async activities(activities: SanitizedActivityDoc | SanitizedActivityDoc[] | null) {
     if (!activities) {
       return activities;
     } else if (!("length" in activities)) {
