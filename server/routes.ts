@@ -19,6 +19,11 @@ class Routes {
     const user = WebSession.getUser(session);
     return await User.getUserById(user);
   }
+  // @Router.get("/sessionUser")
+  // async getSessionUserDoc(session: WebSessionDoc) {
+  //   const user = WebSession.getUser(session);
+  //   return await User.getUserById(user);
+  // }
 
   //// USERS ////
 
@@ -270,7 +275,7 @@ class Routes {
   async getActivitiesUserIsMemberOf(session: WebSessionDoc) {
     const user = WebSession.getUser(session);
     const activities = await Activity.getActivitiesByMemberId(user);
-    return { msg: `Successfully retrieved the activities the current user is a member of`, activities: activities };
+    return Responses.activities(activities);
   }
 
   @Router.get("/activities/members/:username")

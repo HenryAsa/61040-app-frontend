@@ -20,8 +20,7 @@ async function getActivities() {
   } catch (_) {
     return;
   }
-  console.log(activities.value);
-  activities.value = activityResults.activities;
+  activities.value = activityResults;
 }
 
 function updateEditing(id: string) {

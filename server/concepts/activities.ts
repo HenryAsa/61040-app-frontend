@@ -13,6 +13,15 @@ export interface ActivityDoc extends BaseDoc {
   carpools: Array<ObjectId>;
 }
 
+export interface SanitizedActivityDoc extends BaseDoc {
+  name: string;
+  location: string;
+  members: Array<ObjectId>;
+  creator: ObjectId;
+  managers: Array<ObjectId>;
+  carpools: Array<ObjectId>;
+}
+
 export default class ActivityConcept {
   public readonly activities = new DocCollection<ActivityDoc>("activities");
 

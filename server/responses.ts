@@ -1,5 +1,5 @@
-import { Activity, User } from "./app";
-import { ActivityDoc } from "./concepts/activities";
+import { User } from "./app";
+import { ActivityDoc, SanitizedActivityDoc } from "./concepts/activities";
 import { AlreadyFriendsError, FriendNotFoundError, FriendRequestAlreadyExistsError, FriendRequestDoc, FriendRequestNotFoundError } from "./concepts/friend";
 import { PostAuthorNotMatchError, PostDoc } from "./concepts/post";
 import { Router } from "./framework/router";
@@ -46,15 +46,20 @@ export default class Responses {
     if (!activity) {
       return activity;
     }
-    const users = await User.idsToUsernames(activity.members);
-    console.log(users);
+    // const users = await User.idsToUsernames(activity.members);
+    const users = await Promise.all(activity.members.map((member) => User.getUserById(member)));
     return { ...activity, members: users };
   }
 
   /**
    * Same as {@link activity} but for an array of ActivityDoc for improved performance.
    */
-  static async activities(activities: ActivityDoc[]) {
+  static async activities(activities: ActivityDoc | ActivityDoc[] | null) {
+    if (!activities) {
+      return activities;
+    } else if (!("length" in activities)) {
+      return await [this.activity(activities)];
+    }
     return await Promise.all(activities.map((activity) => this.activity(activity)));
   }
 }
