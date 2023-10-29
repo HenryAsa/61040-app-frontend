@@ -43,6 +43,7 @@
     "vue-tsc": "^1.8.11"
   },
   "dependencies": {
+    "@material/web": "^1.0.1",
     "@vercel/analytics": "^1.1.1",
     "connect-mongo": "^5.0.0",
     "cors": "^2.8.5",

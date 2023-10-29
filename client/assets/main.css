@@ -30,3 +30,11 @@ a.button {
   align-items: center;
   gap: 1em;
 }
+
+@font-face { font-family: Nunito; src: url("client/assets/fonts/Nunito/Nunito-VariableFont_wght.ttf"); } 
+/* @font-face { font-family: Delicious; font-weight: bold; src: url('Delicious-Bold.otf');} */
+
+
+body {
+  font-family: 'Nunito';
+}
