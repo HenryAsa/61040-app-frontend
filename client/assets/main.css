@@ -5,20 +5,26 @@
   --base-bg: #f1f3f5;
 }
 
+button {
+  border-radius: 0.5em;
+}
+
 button.btn-small {
   font-size: 80%;
+  border-radius: 0.5em;
 }
 
 button.button-error {
   color: white;
   background: var(--red);
+  border-radius: 0.5em;
 }
 
 a.button {
   color: #212529;
   background-color: #f1f3f5;
   border: 1px solid #dee2e6;
-  border-radius: 0.25em;
+  border-radius: 0.5em;
   padding: 0.375em 0.75em;
   text-decoration: none;
 }
