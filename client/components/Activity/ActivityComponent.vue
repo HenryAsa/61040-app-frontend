@@ -3,6 +3,7 @@ import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
+import { UserDoc } from "@/utils/interfaces";
 import ActivityMembers from "./ActivityMembers.vue";
 import JoinActivity from "./JoinActivity.vue";
 
@@ -20,7 +21,7 @@ const deleteActivity = async () => {
 };
 
 function isMember() {
-  const usernames = props.activity.members.map((member) => member.username);
+  const usernames = props.activity.members.map((member: UserDoc) => member.username);
   console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }

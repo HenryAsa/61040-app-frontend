@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserStore } from "@/stores/user";
 import { fetchy } from "@/utils/fetchy";
+import { UserDoc } from "@/utils/interfaces";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 
@@ -21,7 +22,7 @@ const joinActivity = async () => {
 };
 
 function isMember() {
-  const usernames = props.activity.members.map((member) => member.username);
+  const usernames = props.activity.members.map((member: UserDoc) => member.username);
   console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }
