@@ -43,7 +43,7 @@ onBeforeMount(async () => {
     <CreateActivityForm @refreshActivities="getActivities" />
   </section>
   <div class="row">
-    <h2 v-if="!searchActivityName">Activities:</h2>
+    <h2 v-if="!searchActivityName">Activities (password to join them is "password"):</h2>
     <h2 v-else>Activities by {{ searchActivityName }}:</h2>
     <SearchActivity v-model="searchActivityName" @getActivitiesByName="getActivities" />
   </div>
