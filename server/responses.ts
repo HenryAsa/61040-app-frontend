@@ -47,8 +47,9 @@ export default class Responses {
       return activity;
     }
     // const users = await User.idsToUsernames(activity.members);
-    const users = await Promise.all(activity.members.map((member) => User.getUserById(member)));
-    return { ...activity, members: users };
+    const activity_members = await Promise.all(activity.members.map((member) => User.getUserById(member)));
+    const activity_managers = await Promise.all(activity.managers.map((manager) => User.getUserById(manager)));
+    return { ...activity, members: activity_members, managers: activity_managers };
   }
 
   /**

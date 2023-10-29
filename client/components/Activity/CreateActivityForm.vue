@@ -30,7 +30,7 @@ const emptyForm = () => {
   <form @submit.prevent="createActivity(name, join_code, location)">
     <label for="content">Create a new Activity!</label>
     <input type="text" id="name" v-model.trim="name" placeholder="Name the new activity!" required />
-    <input type="text" id="join_code" v-model.trim="join_code" placeholder="Enter the secret join code for this activity!" required />
+    <input type="password" id="join_code" v-model.trim="join_code" placeholder="Enter the secret join code for this activity!" required />
     <input type="text" id="location" v-model.trim="location" placeholder="Please enter the location where this activity occurs" required />
     <button type="submit" class="pure-button-primary pure-button">Create Activity</button>
   </form>

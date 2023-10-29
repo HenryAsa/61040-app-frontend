@@ -36,7 +36,7 @@ function showInputFunc() {
   <div class="base">
     <menu v-if="!isMember()">
       <li v-if="!showInput"><button class="btn-small pure-button" @click="showInputFunc()">Join Activity</button></li>
-      <li v-if="showInput"><input v-model.trim="join_code" type="text" placeholder="Join Code" /></li>
+      <li v-if="showInput"><input v-model.trim="join_code" type="password" placeholder="Join Code" /></li>
       <li v-if="showInput"><button class="btn-small pure-button" @click="joinActivity">Submit</button></li>
     </menu>
   </div>

@@ -20,6 +20,10 @@ const deleteActivity = async () => {
   emit("refreshActivities");
 };
 
+const someUpdate = async () => {
+  emit("refreshActivities");
+};
+
 function isMember() {
   const usernames = props.activity.members.map((member: UserDoc) => member.username);
   console.log(usernames.includes(currentUsername.value));
@@ -33,26 +37,28 @@ function isMember() {
   <div class="base">
     <div class="members-section">
       <p class="heading">Members</p>
+      <p v-if="!isMember()">To see the members of this</p>
+      <p v-if="!isMember()">activity, you must join it!</p>
       <article class="members" v-for="member in props.activity.members" :key="member">
-        <ActivityMembers :user="member" />
+        <ActivityMembers v-if="isMember()" :user="member" @refreshActivities="someUpdate" />
       </article>
     </div>
     <div class="members-section">
       <p class="heading">Managers</p>
       <article class="managers" v-for="manager in props.activity.managers" :key="manager">
-        <ActivityMembers :user="manager" />
+        <ActivityMembers :user="manager" @refreshActivities="someUpdate" />
       </article>
     </div>
-    <article class="timestamp">
+    <!-- <article class="timestamp">
       <p v-if="props.activity.dateCreated !== props.activity.dateUpdated">Edited on: {{ formatDate(props.activity.dateUpdated) }}</p>
       <p v-else>Created on: {{ formatDate(props.activity.dateCreated) }}</p>
-    </article>
+    </article> -->
     <menu v-if="isMember()">
       <!-- <li><button class="btn-small pure-button" @click="emit('editActivity', props.activity._id)">Edit</button></li> -->
       <li><button class="button-error btn-small pure-button" @click="deleteActivity">Delete</button></li>
     </menu>
     <menu>
-      <JoinActivity :activity="props.activity" />
+      <JoinActivity :activity="props.activity" @refreshActivities="someUpdate" />
     </menu>
   </div>
 </template>
