@@ -20,7 +20,7 @@ async function register() {
   console.log(`THIS IS THE PROFILE URL:   ${profile_picture.value}`);
   await createUser(username.value, password.value, first_name.value, last_name.value, profile_picture.value);
   await loginUser(username.value, password.value);
-  void updateSession();
+  await updateSession();
   void router.push({ name: "Home" });
 }
 
