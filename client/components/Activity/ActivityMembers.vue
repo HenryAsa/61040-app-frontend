@@ -44,6 +44,6 @@ img {
   padding-bottom: 0.2rem;
   padding-left: 0.2rem;
   padding-right: 0.3rem;
-  background-color: #d5ffce;
+  background-color: #fddf93;
 }
 </style>
