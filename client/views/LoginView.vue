@@ -5,7 +5,7 @@ import RegisterForm from "@/components/Login/RegisterForm.vue";
 
 <template>
   <main class="column">
-    <h1>Please login or register!</h1>
+    <h1>Welcome to Community Carpool!  Please login or register to use the app!</h1>
     <LoginForm />
     <RegisterForm />
   </main>

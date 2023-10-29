@@ -1,5 +1,21 @@
 /* Add some global styles here! */
 
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+html, body {
+  font-family: 'Nunito', sans-serif;
+}
+
+#app {
+  font-family: 'Nunito', sans-serif;
+}
+
+
+/* @font-face { font-family: "Nunito"; src: url("client/assets/fonts/Nunito/Nunito-VariableFont_wght.ttf"); }
+@font-face { font-family: "Libre_Baskerville"; src: url("client/assets/fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf"); }
+@font-face { font-family: "Libre_Baskerville"; font-weight: bold; src: url("client/assets/fonts/Libre_Baskerville/LibreBaskerville-Bold.ttf"); } */
+/* @font-face { font-family: Delicious; font-weight: bold; src: url('Delicious-Bold.otf');}*/
+
 :root {
   --red: rgb(208, 67, 12);
   --base-bg: #f1f3f5;
@@ -37,13 +53,6 @@ a.button {
   gap: 1em;
 }
 
-@font-face { font-family: "Nunito"; src: url("client/assets/fonts/Nunito/Nunito-VariableFont_wght.ttf"); }
-@font-face { font-family: "Libre_Baskerville"; src: url("client/assets/fonts/Libre_Baskerville/LibreBaskerville-Regular.ttf"); }
-@font-face { font-family: "Libre_Baskerville"; font-weight: bold; src: url("client/assets/fonts/Libre_Baskerville/LibreBaskerville-Bold.ttf"); }
-/* @font-face { font-family: Delicious; font-weight: bold; src: url('Delicious-Bold.otf');} */
-
-
 body {
-  font-family: 'Nunito';
   background-color: #cbffc7;
 }

@@ -13,7 +13,10 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
   <main>
     <h1>Home Page</h1>
     <section>
-      <h1 v-if="isLoggedIn">Welcome {{ currentUsername }}!</h1>
+      <h1 v-if="isLoggedIn">
+        Welcome <span class="gradient-text">{{ currentUsername }}</span
+        >!
+      </h1>
       <h1 v-else>{{ void router.push({ name: "Login" }) }}</h1>
     </section>
     <div v-if="isLoggedIn">
@@ -27,5 +30,10 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
 <style scoped>
 h1 {
   text-align: center;
+}
+.gradient-text {
+  background: -webkit-linear-gradient(0deg, red, orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 </style>

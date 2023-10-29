@@ -16,10 +16,18 @@ const emit = defineEmits(["getPostsByAuthor"]);
 </template>
 
 <style scoped>
-form {
+fieldset {
   display: flex;
-  gap: 0.5em;
+  gap: 0.25em;
   padding: 1em;
+  padding-top: 0.5em;
   align-items: center;
+  background-color: #7eeaff;
+  border-radius: 8px;
+}
+legend {
+  background-color: #7eeaff;
+  padding: 0.5em;
+  border-radius: 8px;
 }
 </style>
