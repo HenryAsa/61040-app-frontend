@@ -31,7 +31,9 @@ a.button {
   gap: 1em;
 }
 
-@font-face { font-family: Nunito; src: url("client/assets/fonts/Nunito/Nunito-VariableFont_wght.ttf"); } 
+@font-face { font-family: "Nunito"; src: url("client/assets/fonts/Nunito/Nunito-VariableFont_wght.ttf"); }
+@font-face { font-family: "Libre_Bakerville"; src: url("client/assets/fonts/Libre_Bakerville/LibreBaskerville-Regular.ttf"); }
+@font-face { font-family: "Libre_Bakerville"; font-weight: bold; src: url("client/assets/fonts/Libre_Bakerville/LibreBaskerville-Bold.ttf"); }
 /* @font-face { font-family: Delicious; font-weight: bold; src: url('Delicious-Bold.otf');} */
 
 
