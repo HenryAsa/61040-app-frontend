@@ -71,14 +71,14 @@ const uploadImage = async () => {
   height: 20vw;
   object-fit: cover;
   align-self: auto;
-  border: 3px solid #e3e8f4;
+  border: 3px solid var(--subtle-gray);
   border-radius: 16px;
   display: block;
   margin: 1rem auto;
   max-width: 100%;
 }
 #media_uploader {
-  border: 3px solid #e3e8f4;
+  border: 3px solid var(--subtle-gray);
   border-radius: 16px;
   display: block;
   margin: 1rem auto;

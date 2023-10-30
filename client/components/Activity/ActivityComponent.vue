@@ -4,8 +4,10 @@ import { fetchy } from "@/utils/fetchy";
 import { formatDate } from "@/utils/formatDate";
 import { storeToRefs } from "pinia";
 import { UserDoc } from "@/utils/interfaces";
-import ActivityMembers from "./ActivityMembers.vue";
-import JoinActivity from "./JoinActivity.vue";
+import JoinActivity from "@/components/Activity/JoinActivity.vue";
+import LeaveActivity from "@/components/Activity/LeaveActivity.vue";
+import MiniUserView from "@/components/User/MiniUserView.vue";
+import PromoteToManager from "@/components/Activity/PromoteToManager.vue";
 
 const props = defineProps(["activity"]);
 const emit = defineEmits(["editActivity", "refreshActivities"]);
@@ -29,6 +31,12 @@ function isMember() {
   console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }
+
+function isManager() {
+  const usernames = props.activity.managers.map((manager: UserDoc) => manager.username);
+  console.log(usernames.includes(currentUsername.value));
+  return usernames.includes(currentUsername.value);
+}
 </script>
 
 <template>
@@ -40,25 +48,25 @@ function isMember() {
       <p v-if="!isMember()">To see the members of this</p>
       <p v-if="!isMember()">activity, you must join it!</p>
       <article class="members" v-for="member in props.activity.members" :key="member">
-        <ActivityMembers v-if="isMember()" :user="member" @refreshActivities="someUpdate" />
+        <MiniUserView v-if="isMember()" :user="member" @refreshActivities="someUpdate" />
       </article>
     </div>
     <div class="members-section">
       <p class="heading">Managers</p>
-      <article class="managers" v-for="manager in props.activity.managers" :key="manager">
-        <ActivityMembers :user="manager" @refreshActivities="someUpdate" />
+      <article class="members" v-for="manager in props.activity.managers" :key="manager">
+        <MiniUserView :user="manager" @refreshActivities="someUpdate" />
       </article>
     </div>
     <!-- <article class="timestamp">
       <p v-if="props.activity.dateCreated !== props.activity.dateUpdated">Edited on: {{ formatDate(props.activity.dateUpdated) }}</p>
       <p v-else>Created on: {{ formatDate(props.activity.dateCreated) }}</p>
     </article> -->
-    <menu v-if="isMember()">
+    <menu class="right-menu">
       <!-- <li><button class="btn-small pure-button" @click="emit('editActivity', props.activity._id)">Edit</button></li> -->
-      <li><button class="button-error btn-small pure-button" @click="deleteActivity">Delete</button></li>
-    </menu>
-    <menu>
-      <JoinActivity :activity="props.activity" @refreshActivities="someUpdate" />
+      <li v-if="isMember()"><LeaveActivity :activity="props.activity" @refresh-activities="someUpdate" /></li>
+      <li v-if="!isMember()"><JoinActivity :activity="props.activity" @refreshActivities="someUpdate" /></li>
+      <li v-if="isManager()"><PromoteToManager :activity="props.activity" @refresh-activities="someUpdate" /></li>
+      <li v-if="isManager()"><button class="button-error btn-small pure-button" @click="deleteActivity">Delete</button></li>
     </menu>
   </div>
 </template>
@@ -94,7 +102,7 @@ p {
 menu {
   list-style-type: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 1em;
   padding: 0;
   margin: 0;
@@ -111,6 +119,10 @@ menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.right-menu {
+  align-items: end;
 }
 
 .base article:only-child {
