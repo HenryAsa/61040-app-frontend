@@ -173,9 +173,6 @@ export default class ActivityConcept {
   }
 
   async isManager(_id: ObjectId, user: ObjectId, throw_error: boolean = true) {
-    // if (activity instanceof ObjectId) {
-    //   activity = await this.getActivityById(activity);
-    // }
     const activity = await this.getActivityById(_id);
     const is_manager = activity.managers.some((id) => id.toString() === user.toString());
     if (!throw_error) return is_manager;
@@ -183,7 +180,7 @@ export default class ActivityConcept {
   }
 
   async isNotManager(_id: ObjectId, user: ObjectId, throw_error: boolean = true) {
-    const is_not_manager = !this.isManager(_id, user, false);
+    const is_not_manager = !(await this.isManager(_id, user, false));
     if (!throw_error) return is_not_manager;
     if (!is_not_manager) throw new NotAllowedError("This user is already a manager");
   }
@@ -196,7 +193,7 @@ export default class ActivityConcept {
   }
 
   async isNotMember(_id: ObjectId, user: ObjectId, throw_error: boolean = true) {
-    const is_not_member = !this.isMember(_id, user, false);
+    const is_not_member = !(await this.isMember(_id, user, false));
     if (!throw_error) return is_not_member;
     if (!is_not_member) throw new NotAllowedError("This user is already a member");
   }
