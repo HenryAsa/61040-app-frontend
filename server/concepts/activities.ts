@@ -128,8 +128,10 @@ export default class ActivityConcept {
     return { msg: `'${user_to_demote}' is no longer a manager of '${_id}'` };
   }
 
-  async removeMemberFromActivity(_id: ObjectId, user_to_remove: ObjectId) {
-    await this.isManager(_id, user_to_remove); // Raises an error if the member is also a manager
+  async removeMemberFromActivity(_id: ObjectId, user_to_remove: ObjectId, isLeaving: Boolean = false) {
+    if (!isLeaving) {
+      await this.isManager(_id, user_to_remove); // Raises an error if the member is also a manager
+    }
     const activity = await this.getActivityById(_id);
     const members = activity.members.filter((users) => users.toString() !== user_to_remove.toString());
     await this.update(_id, { members: members });

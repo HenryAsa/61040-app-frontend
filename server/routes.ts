@@ -355,8 +355,12 @@ class Routes {
   async leaveActivity(session: WebSessionDoc, activity_name: string) {
     const user = WebSession.getUser(session);
     const activity = await Activity.getActivityByName(activity_name);
-    await Activity.removeManagerFromActivity(activity._id, user);
-    await Activity.removeMemberFromActivity(activity._id, user);
+    try {
+      await Activity.removeManagerFromActivity(activity._id, user);
+    } catch {
+      console.log("NOT A MANAGER");
+    }
+    await Activity.removeMemberFromActivity(activity._id, user, true);
     return { msg: `User '${user}' has successfully left the activity ${activity.name}'` };
   }
 
