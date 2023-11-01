@@ -24,13 +24,11 @@ const leaveActivity = async () => {
 
 function isMember() {
   const usernames = props.activity.members.map((member: UserDoc) => member.username);
-  console.log(usernames.includes(user_to_promote.value));
   return usernames.includes(currentUsername.value);
 }
 
 function isManager() {
   const usernames = props.activity.managers.map((manager: UserDoc) => manager.username);
-  console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }
 

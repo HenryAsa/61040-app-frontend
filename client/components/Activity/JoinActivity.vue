@@ -23,7 +23,6 @@ const joinActivity = async () => {
 
 function isMember() {
   const usernames = props.activity.members.map((member: UserDoc) => member.username);
-  console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }
 
