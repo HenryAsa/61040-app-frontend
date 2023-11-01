@@ -17,7 +17,7 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
         Welcome <span class="gradient-text">{{ currentUsername }}</span
         >!
       </h1>
-      <h1 v-else>{{ void router.push({ name: "Login" }) }}</h1>
+      <h1 v-if="!isLoggedIn">{{ void router.push({ name: "Login" }) }}</h1>
     </section>
     <div v-if="isLoggedIn">
       <JoinedActivitiesList />
