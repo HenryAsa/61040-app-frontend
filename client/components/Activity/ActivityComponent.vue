@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { useUserStore } from "@/stores/user";
-import { fetchy } from "@/utils/fetchy";
-import { formatDate } from "@/utils/formatDate";
-import { storeToRefs } from "pinia";
-import { UserDoc } from "@/utils/interfaces";
 import JoinActivity from "@/components/Activity/JoinActivity.vue";
 import LeaveActivity from "@/components/Activity/LeaveActivity.vue";
-import MiniUserView from "@/components/User/MiniUserView.vue";
 import PromoteToManager from "@/components/Activity/PromoteToManager.vue";
+import MiniUserView from "@/components/User/MiniUserView.vue";
+import { useUserStore } from "@/stores/user";
+import { fetchy } from "@/utils/fetchy";
+import { UserDoc } from "@/utils/interfaces";
+import { storeToRefs } from "pinia";
+import { RouterLink } from "vue-router";
 
 const props = defineProps(["activity"]);
 const emit = defineEmits(["editActivity", "refreshActivities"]);
@@ -28,19 +28,24 @@ const someUpdate = async () => {
 
 function isMember() {
   const usernames = props.activity.members.map((member: UserDoc) => member.username);
-  console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }
 
 function isManager() {
   const usernames = props.activity.managers.map((manager: UserDoc) => manager.username);
-  console.log(usernames.includes(currentUsername.value));
   return usernames.includes(currentUsername.value);
 }
 </script>
 
 <template>
-  <p class="name">{{ props.activity.name.toString() }}</p>
+  <div class="activity-name">
+    <RouterLink :to="'/activity/' + $props.activity.name" class="name">{{ props.activity.name.toString() }}</RouterLink>
+    <li v-if="isMember()">
+      <RouterLink :to="'/activity/' + $props.activity.name" class="activity-link"
+        ><button class="btn-small pure-button">Click to view the {{ props.activity.name.toString() }} Page</button></RouterLink
+      >
+    </li>
+  </div>
   <!-- <p>{{ props.activity.members.map((member) => member) }}</p> -->
   <div class="base">
     <div class="members-section">
@@ -76,9 +81,28 @@ p {
   margin: 0em;
 }
 
+.activity-name {
+  display: flex;
+  gap: 2em;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+  text-decoration: none;
+}
+
 .name {
   font-weight: bold;
   font-size: 1.5em;
+  text-decoration: none;
+  background: -webkit-linear-gradient(0deg, royalblue, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.activity-link {
+  font-weight: bold;
+  font-size: 1.5em;
+  text-decoration: none;
 }
 
 .heading {

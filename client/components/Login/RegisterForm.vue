@@ -21,6 +21,7 @@ async function register() {
   await createUser(username.value, password.value, first_name.value, last_name.value, profile_picture.value);
   await loginUser(username.value, password.value);
   await updateSession();
+  console.log("Going to Home")
   void router.push({ name: "Home" });
 }
 
@@ -40,16 +41,16 @@ function assignPassword(userPassword: string) {
     <h3>Register User</h3>
     <fieldset>
       <div class="pure-control-group">
-        <label for="aligned-name">First Name</label>
-        <input v-model.trim="first_name" type="text" id="aligned-name" placeholder="First Name" required />
+        <label for="aligned-first-name">First Name</label>
+        <input v-model.trim="first_name" type="text" id="aligned-first-name" placeholder="First Name" required />
       </div>
       <div class="pure-control-group">
-        <label for="aligned-name">Last Name</label>
-        <input v-model.trim="last_name" type="text" id="aligned-name" placeholder="Last Name" required />
+        <label for="aligned-last-name">Last Name</label>
+        <input v-model.trim="last_name" type="text" id="aligned-last-name" placeholder="Last Name" required />
       </div>
       <div class="pure-control-group">
-        <label for="aligned-name">Username</label>
-        <input v-model.trim="username" type="text" id="aligned-name" placeholder="Username" required />
+        <label for="aligned-username">Username</label>
+        <input v-model.trim="username" type="text" id="aligned-username" placeholder="Username" required />
       </div>
       <div class="pure-control-group">
         <PasswordValidation @userPassword="assignPassword" id="aligned-password" placeholder="Password" required></PasswordValidation>
