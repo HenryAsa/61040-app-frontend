@@ -42,11 +42,15 @@ export const useUserStore = defineStore(
         currentUserFirstName.value = first_name;
         currentUserLastName.value = last_name;
         currentUserProfilePhoto.value = profile_photo;
-      } catch {
+        console.log("Update Session WORKED");
+      } catch (_) {
+        console.log(await fetchy("api/session", "GET", { alert: false }));
+        console.log(_);
         currentUsername.value = "";
         currentUserFirstName.value = "";
         currentUserLastName.value = "";
         currentUserProfilePhoto.value = "";
+        console.log("Update Session NOT WORKING");
       }
     };
 

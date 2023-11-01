@@ -282,19 +282,19 @@ class Routes {
   async getActivitiesByMemberUsername(username: string) {
     const user = await User.getUserByUsername(username);
     const activities = await Activity.getActivitiesByMemberId(user._id);
-    return { msg: `Successfully retrieved the activities ${user.username} is a member of`, activities: activities };
+    return Responses.activities(activities);
   }
 
-  @Router.get("/activities/id/:id")
+  @Router.get("/activity/id/:id")
   async getActivityById(id: ObjectId) {
     const activity = await Activity.getActivityById(id);
-    return { msg: `Successfully retrieved the activity '${id}'`, activity: activity };
+    return Responses.activity(activity);
   }
 
   @Router.get("/activity/:name")
   async getActivityByName(name: string) {
     const activity = await Activity.getActivityByName(name);
-    return Responses.activities(activity);
+    return Responses.activity(activity);
   }
 
   @Router.post("/activity")
