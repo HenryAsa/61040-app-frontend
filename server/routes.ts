@@ -291,10 +291,10 @@ class Routes {
     return { msg: `Successfully retrieved the activity '${id}'`, activity: activity };
   }
 
-  @Router.get("/activities/:name")
+  @Router.get("/activity/:name")
   async getActivityByName(name: string) {
     const activity = await Activity.getActivityByName(name);
-    return { msg: `Successfully retrieved the activity '${name}'`, activity: activity };
+    return Responses.activities(activity);
   }
 
   @Router.post("/activity")
