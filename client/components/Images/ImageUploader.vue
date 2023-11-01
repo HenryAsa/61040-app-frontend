@@ -56,14 +56,13 @@ const uploadImage = async () => {
 
 <template>
   <div id="image_uploader">
-    <v-flex></v-flex>
     <input type="file" @change="handleFileChange" />
     <img class="profile_photo" v-if="imageURL" :src="imageURL" alt="Image that was just uploaded" />
     <br />
   </div>
 </template>
 
-<style>
+<style scoped>
 .profile_photo {
   width: 20vw;
   height: 20vw;
