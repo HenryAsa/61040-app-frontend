@@ -9,7 +9,7 @@ const emit = defineEmits(["editPost", "refreshPosts"]);
 
 const editPost = async (content: string) => {
   try {
-    await fetchy(`api/posts/${props.post._id}`, "PATCH", { body: { update: { content: content } } });
+    await fetchy(`/api/posts/${props.post._id}`, "PATCH", { body: { update: { content: content } } });
   } catch (e) {
     return;
   }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ActivityListComponent from "@/components/Activity/ActivityListComponent.vue";
 import JoinedActivitiesList from "@/components/Activity/JoinedActivitiesList.vue";
-import PostListComponent from "@/components/Post/PostListComponent.vue";
+// import PostListComponent from "@/components/Post/PostListComponent.vue";
 import router from "@/router";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
@@ -23,7 +23,7 @@ const { currentUsername, isLoggedIn } = storeToRefs(useUserStore());
       <JoinedActivitiesList />
     </div>
     <ActivityListComponent />
-    <PostListComponent />
+    <!-- <PostListComponent /> -->
   </main>
 </template>
 
