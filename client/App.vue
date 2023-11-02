@@ -29,6 +29,9 @@ onBeforeMount(async () => {
           <!-- <img src="@/assets/images/logo.svg" /> -->
           <img src="@/assets/images/carpool.jpg" />
           <h1 class="gradient-text">Community Carpool</h1>
+          <div class="wrap">
+            <div class="c" v-for="_ in 300" :key="_"></div>
+          </div>
         </div>
       </RouterLink>
       <ul class="nav-items">
@@ -74,13 +77,14 @@ h1 {
 }
 
 img {
-  height: 3em;
+  width: 3.5 em;
+  height: 3.5em;
   border-radius: 8px;
 }
 
 .profile_picture {
-  width: 5vw;
-  height: 5vw;
+  width: 3.5em;
+  height: 3.5em;
   object-fit: cover;
   align-self: auto;
   border: 3px solid var(--subtle-gray);
@@ -143,5 +147,74 @@ a::before {
 a:hover::before {
   transform-origin: left;
   transform: scaleX(1);
+}
+</style>
+
+<style scoped lang="scss">
+// GOT THIS FROM https://codepen.io/cam/pen/JoMxGd
+// best in chrome
+$total: 300; // total particles
+$orb-size: 20px;
+$particle-size: 2px;
+$time: 14s;
+$base-hue: 0; // change for diff colors (180 is nice)
+
+body {
+  background: black;
+  overflow: hidden; // no scrollbars..
+}
+
+.wrap {
+  position: relative;
+  // top: 50%;
+  left: 30px;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  animation: rotate $time infinite linear; // rotate orb
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotateY(360deg) rotateX(360deg);
+  }
+}
+
+.c {
+  position: absolute;
+  width: $particle-size;
+  height: $particle-size;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+@for $i from 1 through $total {
+  $z: (random(360) * 1deg); // random angle to rotateZ
+  $y: (random(360) * 1deg); // random to rotateX
+  $hue: ((40 / $total * $i) + $base-hue); // set hue
+
+  .c:nth-child(#{$i}) {
+    // grab the nth particle
+    animation: orbit#{$i} $time infinite;
+    animation-delay: ($i * 0.01s);
+    background-color: hsla($hue, 100%, 50%, 1);
+  }
+
+  @keyframes orbit#{$i} {
+    20% {
+      opacity: 1; // fade in
+    }
+    30% {
+      transform: rotateZ(-$z) rotateY($y) translateX($orb-size) rotateZ($z); // form orb
+    }
+    80% {
+      transform: rotateZ(-$z) rotateY($y) translateX($orb-size) rotateZ($z); // hold orb state 30-80
+      opacity: 1; // hold opacity 20-80
+    }
+    100% {
+      transform: rotateZ(-$z) rotateY($y) translateX(($orb-size * 3)) rotateZ($z); // translateX * 3
+    }
+  }
 }
 </style>
