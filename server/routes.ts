@@ -7,7 +7,7 @@ import { ActivityDoc } from "./concepts/activities";
 import { CarpoolDoc } from "./concepts/carpools";
 import { CommentDoc, CommentOptions } from "./concepts/comment";
 import { MediaDoc } from "./concepts/media";
-import { PostDoc, PostOptions } from "./concepts/post";
+import { PostDoc } from "./concepts/post";
 import { UserDoc } from "./concepts/user";
 import { WebSessionDoc } from "./concepts/websession";
 
@@ -30,6 +30,17 @@ class Routes {
   @Router.get("/users")
   async getUsers() {
     return await User.getUsers();
+  }
+
+  @Router.get("/usersSearchByUsername")
+  async searchUsersByUserame(username?: string) {
+    let users;
+    if (username) {
+      users = await User.searchUsersByUsername(username);
+    } else {
+      users = await User.getUsers();
+    }
+    return users;
   }
 
   @Router.get("/users/:username")
@@ -95,6 +106,32 @@ class Routes {
     }
     return Responses.posts(posts);
   }
+
+  @Router.get("/postsSearchByAuthor")
+  async searchPostsByAuthor(author?: string) {
+    let posts;
+    if (author) {
+      const users = await User.searchUsersByUsername(author);
+      const user_ids = await users.map((user) => user._id);
+      const query = { author: { $in: user_ids } };
+      posts = await Post.getPosts(query);
+    } else {
+      posts = await Post.getPosts({});
+    }
+    return Responses.posts(posts);
+  }
+
+  // @Router.get("/posts")
+  // async getPostsByScope(scope: ObjectId) {
+  //   let posts;
+  //   if ) {
+  //     const id = (await User.getUserByUsername(author))._id;
+  //     posts = await Post.getPostsByAuthor(id);
+  //   } else {
+  //     posts = await Post.getPosts({});
+  //   }
+  //   return Responses.posts(posts);
+  // }
 
   @Router.post("/posts")
   async createPost(session: WebSessionDoc, content: string, options?: PostOptions) {

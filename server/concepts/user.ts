@@ -1,4 +1,4 @@
-import { ObjectId } from "mongodb";
+import { Filter, ObjectId } from "mongodb";
 import DocCollection, { BaseDoc } from "../framework/doc";
 import { BadValuesError, NotAllowedError, NotFoundError } from "./errors";
 
@@ -25,6 +25,11 @@ export default class UserConcept {
     return rest;
   }
 
+  private sanitizeUsers(activities: Array<UserDoc>) {
+    // eslint-disable-next-line
+    return activities.map((user) => this.sanitizeUser(user));
+  }
+
   async getUserById(_id: ObjectId) {
     const user = await this.users.readOne({ _id });
     if (user === null) {
@@ -39,6 +44,20 @@ export default class UserConcept {
       throw new NotFoundError(`User not found!`);
     }
     return this.sanitizeUser(user);
+  }
+
+  async searchUsersByUsername(username: string) {
+    let query: Filter<UserDoc> = {};
+    if (username) {
+      query = { "username": { $regex: `${username}`, $options: "i" } };
+    } else {
+      query = {};
+    }
+    const users = await this.users.readMany(query);
+    if (users === null) {
+      throw new NotFoundError(`User not found!`);
+    }
+    return await this.sanitizeUsers(users);
   }
 
   async idsToUsernames(ids: ObjectId[]) {

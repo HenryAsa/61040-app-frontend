@@ -3,22 +3,18 @@ import { Filter, ObjectId } from "mongodb";
 import DocCollection, { BaseDoc } from "../framework/doc";
 import { NotAllowedError, NotFoundError } from "./errors";
 
-export interface PostOptions {
-  backgroundColor?: string;
-  // comments?: Array<ObjectId>;  // I can just query database by parent post id?
-}
 
 export interface PostDoc extends BaseDoc {
   author: ObjectId;
   content: string;
-  options?: PostOptions;
+  scope: ObjectId;
 }
 
 export default class PostConcept {
   public readonly posts = new DocCollection<PostDoc>("posts");
 
-  async create(author: ObjectId, content: string, options?: PostOptions) {
-    const _id = await this.posts.createOne({ author, content, options });
+  async create(author: ObjectId, content: string, scope?: ObjectId) {
+    const _id = await this.posts.createOne({ author: author, content: content, scope: scope });
     return { msg: "Post successfully created!", post: await this.posts.readOne({ _id }) };
   }
 
@@ -30,7 +26,7 @@ export default class PostConcept {
   }
 
   async getPostById(_id: ObjectId) {
-    const post = await this.posts.readOne({ _id });
+    const post = await this.posts.readOne({ _id: _id });
     if (post === null) {
       throw new NotFoundError(`Post with the id '${_id}' was not found!`);
     }
@@ -38,8 +34,16 @@ export default class PostConcept {
     // return this.sanitizePost(post);
   }
 
+  async getPostsByScope(scope: ObjectId) {
+    const posts = await this.posts.readMany({ scope: scope });
+    if (posts === null) {
+      throw new NotFoundError(`There are no posts in this scope.`);
+    }
+    return posts;
+  }
+
   async getPostsByAuthor(author: ObjectId) {
-    return await this.getPosts({ author });
+    return await this.getPosts({ author: author });
   }
 
   async update(_id: ObjectId, update: Partial<PostDoc>) {
