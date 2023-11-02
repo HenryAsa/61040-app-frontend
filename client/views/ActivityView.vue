@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { onBeforeMount, onUpdated, ref } from "vue";
 import { fetchy } from "../utils/fetchy";
 import { ActivityDoc, UserDoc } from "../utils/interfaces";
+import { User } from "firebase/auth";
 
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
 
@@ -51,7 +52,7 @@ function isManager() {
       </h1>
       <h2 v-if="isManager()">You are a manager of this activity. As such, you are granted extra privileges and functionality within the group.</h2>
       <h2>
-        <span class="gradient-text">{{ props.name }}</span> is located at {{ activityGroup.location }}.
+        <span class="gradient-text">{{ props.name }}</span> is located at {{ (activityGroup as unknown as ActivityDoc).location }}.
       </h2>
     </div>
     <section class="activities">
