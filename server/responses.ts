@@ -16,16 +16,21 @@ export default class Responses {
     if (!post) {
       return post;
     }
-    const author = await User.getUserById(post.author);
-    return { ...post, author: author.username };
+    // const users = await User.idsToUsernames(activity.members);
+    const post_author = await User.getUserById(post.author);
+    return { ...post, author: post_author };
   }
 
   /**
    * Same as {@link post} but for an array of PostDoc for improved performance.
    */
-  static async posts(posts: PostDoc[]) {
-    const authors = await User.idsToUsernames(posts.map((post) => post.author));
-    return posts.map((post, i) => ({ ...post, author: authors[i] }));
+  static async posts(posts: PostDoc | PostDoc[] | null) {
+    if (!posts) {
+      return posts;
+    } else if (!("length" in posts)) {
+      return await [this.post(posts)];
+    }
+    return await Promise.all(posts.map((post) => this.post(post)));
   }
 
   /**
