@@ -51,7 +51,6 @@ function isManager() {
       <h1>
         Welcome to the <span class="gradient-text">{{ props.name }}</span> Activity!
       </h1>
-      <p>{{ activityGroup._id }}</p>
       <h2 v-if="isManager()">You are a manager of this activity. As such, you are granted extra privileges and functionality within the group.</h2>
       <h2>
         <span class="gradient-text">{{ props.name }}</span> is located at {{ (activityGroup as unknown as ActivityDoc).location }}.
