@@ -13,8 +13,8 @@ export interface UserDoc {
 export interface ActivityDoc extends BaseDoc {
   name: string;
   location: string;
-  members: Array<ObjectId>;
+  members: Array<UserDoc>;
   creator: ObjectId;
-  managers: Array<ObjectId>;
+  managers: Array<UserDoc>;
   carpools: Array<ObjectId>;
 }

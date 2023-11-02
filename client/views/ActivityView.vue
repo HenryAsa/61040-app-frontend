@@ -4,6 +4,7 @@ import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, onUpdated, ref } from "vue";
 import { fetchy } from "../utils/fetchy";
+import { ActivityDoc, UserDoc } from "../utils/interfaces";
 
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
 
@@ -32,12 +33,12 @@ onUpdated(async () => {
 });
 
 function isMember() {
-  const usernames = activityGroup.value.members.map((member: UserDoc) => member.username);
+  const usernames = (activityGroup.value as unknown as ActivityDoc).members.map((member: UserDoc) => member.username);
   return usernames.includes(currentUsername.value);
 }
 
 function isManager() {
-  const usernames = activityGroup.value.managers.map((manager: UserDoc) => manager.username);
+  const usernames = (activityGroup.value as unknown as ActivityDoc).managers.map((manager: UserDoc) => manager.username);
   return usernames.includes(currentUsername.value);
 }
 </script>
