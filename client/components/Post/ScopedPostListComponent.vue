@@ -39,7 +39,7 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <section v-if="isLoggedIn">
+  <section v-if="isLoggedIn" class="create-post">
     <h2>Create a post:</h2>
     <CreatePostForm :scope="props.activity_id" @refreshPosts="getPostsInScope" />
   </section>
@@ -59,10 +59,13 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped>
-section {
+.create-post {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  padding-bottom: 2em;
+  border-radius: 16px;
+  border-color: 3px solid black;
 }
 
 section,
@@ -74,6 +77,8 @@ p,
 
 article {
   background-color: var(--base-bg);
+  border: 3px solid;
+  border-color: darkgray;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
@@ -82,6 +87,9 @@ article {
 }
 
 .posts {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
   padding: 1em;
 }
 

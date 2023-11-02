@@ -60,10 +60,8 @@ function isManager() {
     <section class="activities">
       <article>
         <ActivityComponent v-if="isLoggedIn && loaded" :activity="activityGroup" @refreshActivities="onUpdated" />
-        <!-- <EditActivityForm v-else :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" /> -->
       </article>
     </section>
-    <!-- <CreatePostForm :scope="(activityGroup as unknown as ActivityDoc)._id" /> -->
     <ScopedPostListComponent v-if="isLoggedIn && loaded" :activity_id="(activityGroup as unknown as ActivityDoc)._id" />
   </div>
   <div v-else class="top-heading">
@@ -94,15 +92,19 @@ section {
 
 article {
   background-color: var(--base-bg);
+  border: 3px solid;
+  border-color: darkgray;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   padding: 1em;
+  z-index: 20;
 }
 
 .activities {
-  padding: 1em;
+  margin: 0 auto;
+  padding: 2em;
 }
 
 .h1 {
