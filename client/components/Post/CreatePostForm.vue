@@ -3,12 +3,16 @@ import { ref } from "vue";
 import { fetchy } from "../../utils/fetchy";
 
 const content = ref("");
+
+const props = defineProps(["scope"]);
 const emit = defineEmits(["refreshPosts"]);
 
 const createPost = async (content: string) => {
+  console.log(props.scope);
+  let query: Record<string, string> = props.scope !== undefined ? { content: content, scope: props.scope } : { content: content };
   try {
-    await fetchy("api/posts", "POST", {
-      body: { content },
+    await fetchy("/api/posts", "POST", {
+      body: query,
     });
   } catch (_) {
     return;

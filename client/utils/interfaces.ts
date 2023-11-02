@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 
-import DocCollection, { BaseDoc } from "../../server/framework/doc";
+import { BaseDoc } from "../../server/framework/doc";
 
 export interface UserDoc {
   username: string;

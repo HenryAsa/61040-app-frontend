@@ -3,7 +3,6 @@ import { Filter, ObjectId } from "mongodb";
 import DocCollection, { BaseDoc } from "../framework/doc";
 import { NotAllowedError, NotFoundError } from "./errors";
 
-
 export interface PostDoc extends BaseDoc {
   author: ObjectId;
   content: string;
@@ -35,7 +34,7 @@ export default class PostConcept {
   }
 
   async getPostsByScope(scope: ObjectId) {
-    const posts = await this.posts.readMany({ scope: scope });
+    const posts = await this.posts.readMany({ scope: scope }, { sort: { dateUpdated: -1 } });
     if (posts === null) {
       throw new NotFoundError(`There are no posts in this scope.`);
     }

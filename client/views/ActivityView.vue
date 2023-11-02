@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ActivityComponent from "@/components/Activity/ActivityComponent.vue";
+import CreatePostForm from "@/components/Post/CreatePostForm.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, onUpdated, ref } from "vue";
 import { fetchy } from "../utils/fetchy";
 import { ActivityDoc, UserDoc } from "../utils/interfaces";
-import { User } from "firebase/auth";
+import ScopedPostListComponent from "../components/Post/ScopedPostListComponent.vue";
 
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
 
@@ -29,9 +30,9 @@ onBeforeMount(async () => {
   loaded.value = true;
 });
 
-onUpdated(async () => {
-  await getActivity();
-});
+// onUpdated(async () => {
+//   await getActivity();
+// });
 
 function isMember() {
   const usernames = (activityGroup.value as unknown as ActivityDoc).members.map((member: UserDoc) => member.username);
@@ -50,6 +51,7 @@ function isManager() {
       <h1>
         Welcome to the <span class="gradient-text">{{ props.name }}</span> Activity!
       </h1>
+      <p>{{ activityGroup._id }}</p>
       <h2 v-if="isManager()">You are a manager of this activity. As such, you are granted extra privileges and functionality within the group.</h2>
       <h2>
         <span class="gradient-text">{{ props.name }}</span> is located at {{ (activityGroup as unknown as ActivityDoc).location }}.
@@ -61,6 +63,8 @@ function isManager() {
         <!-- <EditActivityForm v-else :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" /> -->
       </article>
     </section>
+    <!-- <CreatePostForm :scope="(activityGroup as unknown as ActivityDoc)._id" /> -->
+    <ScopedPostListComponent v-if="isLoggedIn && loaded" :activity_id="(activityGroup as unknown as ActivityDoc)._id" />
   </div>
   <div v-else class="top-heading">
     <h2>

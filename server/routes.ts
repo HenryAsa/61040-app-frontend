@@ -121,20 +121,20 @@ class Routes {
     return Responses.posts(posts);
   }
 
-  // @Router.get("/posts")
-  // async getPostsByScope(scope: ObjectId) {
-  //   let posts;
-  //   if ) {
-  //     const id = (await User.getUserByUsername(author))._id;
-  //     posts = await Post.getPostsByAuthor(id);
-  //   } else {
-  //     posts = await Post.getPosts({});
-  //   }
-  //   return Responses.posts(posts);
-  // }
+  @Router.get("/postsByScopeId")
+  async getPostsByScopeId(session: WebSessionDoc, scope: ObjectId) {
+    scope = new ObjectId(scope);
+    const user = WebSession.getUser(session);
+    await Activity.isMember(scope, user);
+    const posts = await Post.getPostsByScope(scope);
+    return Responses.posts(posts);
+  }
 
   @Router.post("/posts")
   async createPost(session: WebSessionDoc, content: string, scope?: ObjectId) {
+    if (scope !== undefined) {
+      scope = new ObjectId(scope);
+    }
     const user = WebSession.getUser(session);
     const created = await Post.create(user, content, scope);
     return { msg: created.msg, post: await Responses.post(created.post) };
