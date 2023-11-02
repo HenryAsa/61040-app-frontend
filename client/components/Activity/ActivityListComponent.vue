@@ -73,11 +73,14 @@ p,
 
 article {
   background-color: var(--base-bg);
+  border: 3px solid;
+  border-color: darkgray;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   padding: 1em;
+  z-index: 20;
 }
 
 .activities {

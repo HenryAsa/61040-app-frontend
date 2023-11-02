@@ -35,13 +35,13 @@ onBeforeMount(async () => {
 
 <template>
   <section v-if="isLoggedIn">
-    <h2>{{ currentUsername }}'s Activities:</h2>
-    <!-- <CreateActivityForm @refreshActivities="getActivities" /> -->
+    <h2>
+      <span class="gradient-text">{{ currentUsername }}'s</span> Activities:
+    </h2>
   </section>
   <section class="activities" v-if="loaded && activities.length !== 0">
     <article v-for="activity in activities" :key="activity._id">
       <ActivityComponent v-if="editing !== activity._id" :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" />
-      <!-- <EditActivityForm v-else :activity="activity" @refreshActivities="getActivities" @editActivity="updateEditing" /> -->
     </article>
   </section>
   <h3 v-else-if="activities.length === 0">{{ currentUsername }} is not a member of any activities!</h3>
@@ -49,6 +49,12 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped>
+.gradient-text {
+  background: -webkit-linear-gradient(0deg, red, orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 section {
   display: flex;
   flex-direction: column;
@@ -64,11 +70,14 @@ p,
 
 article {
   background-color: var(--base-bg);
+  border: 3px solid;
+  border-color: darkgray;
   border-radius: 1em;
   display: flex;
   flex-direction: column;
   gap: 0.5em;
   padding: 1em;
+  z-index: 20;
 }
 
 .activities {

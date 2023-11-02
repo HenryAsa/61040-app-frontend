@@ -42,6 +42,7 @@ form {
   flex-direction: column;
   gap: 0.5em;
   padding: 1em;
+  border: 3px solid darkgray;
 }
 
 textarea {
@@ -49,7 +50,10 @@ textarea {
   font-size: inherit;
   height: 6em;
   padding: 0.5em;
-  border-radius: 4px;
+  border-radius: 8px;
   resize: none;
+}
+label {
+  font-weight: bold;
 }
 </style>

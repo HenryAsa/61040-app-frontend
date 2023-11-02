@@ -42,7 +42,7 @@ function isManager() {
     <RouterLink :to="'/activity/' + $props.activity.name" class="name">{{ props.activity.name.toString() }}</RouterLink>
     <li v-if="isMember()">
       <RouterLink :to="'/activity/' + $props.activity.name" class="activity-link"
-        ><button class="btn-small pure-button">Click to view the {{ props.activity.name.toString() }} Page</button></RouterLink
+        ><button class="cool-button">Click to view the {{ props.activity.name.toString() }} Page</button></RouterLink
       >
     </li>
   </div>
@@ -101,7 +101,7 @@ p {
 
 .activity-link {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.25em;
   text-decoration: none;
 }
 
@@ -114,7 +114,8 @@ p {
 .members-section {
   padding: 0.5em;
   border-radius: 16px;
-  border: 3px solid;
+  border: 3px solid rgb(211, 212, 124);
+  background-color: lightgoldenrodyellow;
 }
 
 .members {
