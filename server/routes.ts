@@ -126,7 +126,25 @@ class Routes {
     scope = new ObjectId(scope);
     const user = WebSession.getUser(session);
     await Activity.isMember(scope, user);
-    const posts = await Post.getPostsByScope(scope);
+    const posts = await Post.getPostsByScopeId(scope);
+    return Responses.posts(posts);
+  }
+
+  @Router.get("/postsSearchByUsernameInScopeId")
+  async searchPostsByUsernameInScopeId(session: WebSessionDoc, scope: ObjectId, author?: string) {
+    scope = new ObjectId(scope);
+    const user = WebSession.getUser(session);
+    await Activity.isMember(scope, user);
+    let posts: Array<PostDoc>;
+
+    if (author) {
+      const authors = await User.searchUsersByUsername(author);
+      const author_ids = authors.map((author) => author._id);
+      posts = await Post.getPostsByScopeId(scope, author_ids);
+    } else {
+      posts = await Post.getPostsByScopeId(scope);
+    }
+
     return Responses.posts(posts);
   }
 

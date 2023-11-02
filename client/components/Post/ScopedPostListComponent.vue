@@ -16,16 +16,13 @@ let posts = ref<Array<Record<string, string>>>([]);
 let editing = ref("");
 let searchAuthor = ref("");
 
-async function getPostsInScope() {
-  console.log("HERE");
-  console.log(props.activity_id);
-  let query: Record<string, string> = { scope: props.activity_id };
+async function getPostsInScope(author?: string) {
+  let query: Record<string, string> = author !== undefined ? { scope: props.activity_id, author: author } : { scope: props.activity_id };
   let postResults;
   try {
-    // postResults = await fetchy("api/posts", "GET", { query, alert: false });
-    postResults = await fetchy("/api/postsByScopeId", "GET", { query, alert: false });
+    // postResults = await fetchy("/api/postsByScopeId", "GET", { query, alert: false });
+    postResults = await fetchy("/api/postsSearchByUsernameInScopeId", "GET", { query, alert: false });
   } catch (_) {
-    console.log(_);
     return;
   }
   posts.value = postResults;

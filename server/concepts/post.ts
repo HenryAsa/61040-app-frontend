@@ -33,8 +33,13 @@ export default class PostConcept {
     // return this.sanitizePost(post);
   }
 
-  async getPostsByScope(scope: ObjectId) {
-    const posts = await this.posts.readMany({ scope: scope }, { sort: { dateUpdated: -1 } });
+  async getPostsByScopeId(scope: ObjectId, users?: Array<ObjectId>) {
+    let posts: Array<PostDoc>;
+    if (users !== undefined) {
+      posts = await this.posts.readMany({ scope: scope, author: { $in: users } }, { sort: { dateUpdated: -1 } });
+    } else {
+      posts = await this.posts.readMany({ scope: scope }, { sort: { dateUpdated: -1 } });
+    }
     if (posts === null) {
       throw new NotFoundError(`There are no posts in this scope.`);
     }
