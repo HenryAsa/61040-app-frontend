@@ -91,6 +91,7 @@ article {
   flex-direction: row;
   gap: 1em;
   padding: 1em;
+  flex-wrap: wrap;
 }
 
 .row {

@@ -83,6 +83,7 @@ article {
 
 .posts {
   padding: 1em;
+  flex-wrap: wrap;
 }
 
 .row {
