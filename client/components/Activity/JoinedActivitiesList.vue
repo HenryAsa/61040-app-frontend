@@ -16,7 +16,7 @@ let editing = ref("");
 async function getActivities() {
   let activityResults;
   try {
-    activityResults = await fetchy("api/activitiesUserIsMemberOf", "GET", { alert: false });
+    activityResults = await fetchy("/api/activitiesUserIsMemberOf", "GET", { alert: false });
   } catch (_) {
     return;
   }

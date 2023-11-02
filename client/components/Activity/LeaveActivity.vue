@@ -14,7 +14,7 @@ const user_to_promote = ref("");
 
 const leaveActivity = async () => {
   try {
-    await fetchy(`api/activities/leave/${props.activity.name}`, "PATCH", { body: { activity_name: props.activity.name } });
+    await fetchy(`/api/activities/leave/${props.activity.name}`, "PATCH", { body: { activity_name: props.activity.name } });
   } catch {
     return;
   }

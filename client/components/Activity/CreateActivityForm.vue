@@ -9,7 +9,7 @@ const emit = defineEmits(["refreshActivities"]);
 
 const createActivity = async (name: string, join_code: string, location: string) => {
   try {
-    await fetchy("api/activity", "POST", {
+    await fetchy("/api/activity", "POST", {
       body: { name: name, join_code: join_code, location: location },
     });
   } catch (_) {

@@ -14,7 +14,7 @@ const user_to_promote = ref("");
 
 const promoteToManager = async () => {
   try {
-    await fetchy(`api/activities/promote/${user_to_promote.value}`, "PATCH", { body: { activity_name: props.activity.name, user_name: user_to_promote.value } });
+    await fetchy(`/api/activities/promote/${user_to_promote.value}`, "PATCH", { body: { activity_name: props.activity.name, user_name: user_to_promote.value } });
   } catch {
     return;
   }

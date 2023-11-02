@@ -14,7 +14,7 @@ const join_code = ref("");
 
 const joinActivity = async () => {
   try {
-    await fetchy(`api/activities/join/${props.activity.name}`, "PATCH", { body: { name: props.activity.name, join_code: join_code.value } });
+    await fetchy(`/api/activities/join/${props.activity.name}`, "PATCH", { body: { name: props.activity.name, join_code: join_code.value } });
   } catch {
     return;
   }

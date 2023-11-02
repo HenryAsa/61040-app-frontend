@@ -11,7 +11,7 @@ const { currentUsername } = storeToRefs(useUserStore());
 
 const deletePost = async () => {
   try {
-    await fetchy(`api/posts/${props.post._id}`, "DELETE");
+    await fetchy(`/api/posts/${props.post._id}`, "DELETE");
   } catch {
     return;
   }

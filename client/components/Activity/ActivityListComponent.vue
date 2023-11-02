@@ -20,7 +20,7 @@ async function getActivities(activityName?: string) {
   let activityResults;
   let query: Record<string, string> = activityName !== undefined ? { name: activityName } : {};
   try {
-    activityResults = await fetchy("api/activitiesSearchByName", "GET", { query });
+    activityResults = await fetchy("/api/activitiesSearchByName", "GET", { query });
   } catch (_) {
     return;
   }
