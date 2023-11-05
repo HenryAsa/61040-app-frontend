@@ -44,6 +44,7 @@ form {
   flex-direction: column;
   gap: 0.5em;
   padding: 1em;
+  border: 3px solid darkgrey;
 }
 
 input {

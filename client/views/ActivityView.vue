@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import ActivityComponent from "@/components/Activity/ActivityComponent.vue";
-import CreatePostForm from "@/components/Post/CreatePostForm.vue";
 import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { onBeforeMount, onUpdated, ref } from "vue";
+import ScopedPostListComponent from "../components/Post/ScopedPostListComponent.vue";
 import { fetchy } from "../utils/fetchy";
 import { ActivityDoc, UserDoc } from "../utils/interfaces";
-import ScopedPostListComponent from "../components/Post/ScopedPostListComponent.vue";
 
 const { isLoggedIn, currentUsername } = storeToRefs(useUserStore());
 
@@ -51,7 +50,7 @@ function isManager() {
       <h1>
         Welcome to the <span class="gradient-text">{{ props.name }}</span> Activity!
       </h1>
-      <h2 v-if="isManager()">You are a manager of this activity. As such, you are granted extra privileges and functionality within the group.</h2>
+      <h2 v-if="isManager()">You are a <span class="manager-gradient-text">manager</span> of this activity. As such, you are granted extra privileges and functionality within the group.</h2>
       <h2>
         <span class="gradient-text">{{ props.name }}</span> is located at {{ (activityGroup as unknown as ActivityDoc).location }}.
       </h2>
@@ -74,6 +73,12 @@ function isManager() {
 <style scoped>
 .gradient-text {
   background: -webkit-linear-gradient(0deg, red, orange);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.manager-gradient-text {
+  background: -webkit-linear-gradient(0deg, purple, red);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
