@@ -47,6 +47,7 @@ export default class UserConcept {
   }
 
   async searchUsersByUsername(username: string) {
+    // REGEX SEARCHES FOR USERNAMES THAT MATCH
     let query: Filter<UserDoc> = {};
     if (username) {
       query = { "username": { $regex: `${username}`, $options: "i" } };
@@ -133,7 +134,7 @@ export default class UserConcept {
     }
     if (!this.isValidPassword(password)) {
       throw new BadValuesError(
-        "Make the sure the password is at least 7 characters long, contains a combination of upper and lowercase letters, conatins a number, contains a special character, and does not contain any whitespace",
+        "Make the sure the password is at least 7 characters long, contains a combination of upper and lowercase letters, contains a number, contains a special character, and does not contain any whitespace",
       );
     }
     await this.isUsernameUnique(username);

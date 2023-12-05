@@ -33,7 +33,7 @@ class Routes {
   }
 
   @Router.get("/usersSearchByUsername")
-  async searchUsersByUserame(username?: string) {
+  async searchUsersByUsername(username?: string) {
     let users;
     if (username) {
       users = await User.searchUsersByUsername(username);
